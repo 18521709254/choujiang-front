@@ -4,15 +4,14 @@ export function login(data) {
   return request({
     url: '/user/login',
     method: 'post',
-    data
+    data: data
   })
 }
 
 export function getInfo(token) {
   return request({
-    url: '/user/info',
-    method: 'get',
-    params: { token }
+    url: '/user/info?token=' + token,
+    method: 'get'
   })
 }
 

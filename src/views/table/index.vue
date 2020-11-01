@@ -40,6 +40,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      layout="prev, pager, next"
+      :total="50">
+    </el-pagination>
   </div>
 </template>
 
@@ -69,10 +73,13 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+      this.list = [
+        { title: '测试', author: '用户', pageviews: 'pageviews', status: 'success', display_time: '123123' },
+        { title: '测试', author: '用户', pageviews: 'pageviews', status: 'success', display_time: '123123' },
+        { title: '测试', author: '用户', pageviews: 'pageviews', status: 'success', display_time: '123123' },
+        { title: '测试', author: '用户', pageviews: 'pageviews', status: 'success', display_time: '123123' }
+      ]
+      this.listLoading = false
     }
   }
 }

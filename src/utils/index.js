@@ -115,3 +115,13 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+/**
+ * 获取随机数或者随机字母
+ * @param type  随机数：true   随机字母：false
+ * @returns {String}字符串格式的数字
+ */
+export function getRandomValue(type = true) {
+  const random = window.crypto.getRandomValues(new Uint32Array(1))[0]
+  return type ? (random + '') : random.toString(36).replace(/[^a-zA-Z]/g, '')
+}
