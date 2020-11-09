@@ -115,10 +115,10 @@ export const constantRoutes = [
         meta: { title: '物业查询', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: '树结构',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '树结构', icon: 'tree' }
+        path: 'edit',
+        name: 'PropertyEdit',
+        component: () => import('@/views/property/edit'),
+        meta: { title: 'PropertyEdit', icon: 'tree' }
       }
     ]
   },
@@ -128,7 +128,8 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'hash',
+  base: process.env.BASE_URL,
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })
