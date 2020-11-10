@@ -122,6 +122,27 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/community/list',
+    name: 'Example',
+    meta: { title: '小区管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '小区查询',
+        component: () => import('@/views/community/list'),
+        meta: { title: '小区查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'CommunityEdit',
+        component: () => import('@/views/community/edit'),
+        meta: { title: 'CommunityEdit', icon: 'tree' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
