@@ -2,7 +2,14 @@
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="formRules" label-width="120px">
       <el-form-item label="物业名称" prop="name">
-        <el-input v-model="form.name" />
+        <el-input v-model="form.name" style="width: 500px" />
+      </el-form-item>
+      <el-form-item>
+        <el-radio-group v-if="form.id" v-model="form.status">
+          <el-radio-button label="0">正在审核</el-radio-button>
+          <el-radio-button label="1">审核通过</el-radio-button>
+          <el-radio-button label="2">审核失败</el-radio-button>
+        </el-radio-group>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -23,7 +30,9 @@ export default {
         // 物业ID
         id: '',
         // 物业名称
-        name: ''
+        name: '',
+        // 审核状态
+        status: ''
       },
       // 表单验证规则
       formRules: {
@@ -34,6 +43,11 @@ export default {
     }
   },
   mounted() {
+    // 获取父页面传入进来的ID
+    const propertyId = this.$route.query.propertyId
+    if (propertyId) {
+      this.form.id = propertyId
+    }
     // 加载表格数据
     this.getPropertyById()
   },
@@ -47,8 +61,11 @@ export default {
         if (!valid) {
           return
         }
+        // 调用保存方法
         saveProperty(form).then((res) => {
-          this.$message.success(res.data)
+          this.$message.success(res.message)
+          // 返回上一级页面
+          this.onCancel()
         })
       })
     },
@@ -67,7 +84,9 @@ export default {
         return
       }
       getPropertyById(formId).then((res) => {
-        console.log('测试')
+        const data = res.data
+        this.form.name = data.name
+        this.form.status = data.status
       })
     }
   }
@@ -75,8 +94,5 @@ export default {
 </script>
 
 <style scoped>
-.line{
-  text-align: center;
-}
 </style>
 

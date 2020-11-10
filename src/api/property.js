@@ -30,7 +30,7 @@ export function saveProperty(postData) {
  */
 export function getPropertyById(propertyId) {
   return request({
-    url: '/property/listPropertyByPage?propertyId=' + propertyId,
+    url: '/property/getPropertyById?propertyId=' + propertyId,
     method: 'post'
   })
 }

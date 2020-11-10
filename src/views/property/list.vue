@@ -1,7 +1,13 @@
 <template>
   <div class="app-container">
-    <el-button type="primary" style="margin-bottom:30px;" @click="addProperty">新增</el-button>
-    <el-button type="primary" style="margin-bottom:30px;">删除</el-button>
+    <div class="head">
+      <el-button type="primary" @click="addProperty">新增</el-button>
+      <el-button type="danger" @click="delProperty">删除</el-button>
+      <div class="search-box">
+        <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
+        <el-button type="warning" @click="listPropertyByPage">查询</el-button>
+      </div>
+    </div>
     <el-table
       v-loading="listLoading"
       stripe
@@ -33,13 +39,16 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
+            type="primary"
+            icon="el-icon-edit"
             @click="handleEdit(scope.$index, scope.row)"
-          >编辑</el-button>
+          ></el-button>
           <el-button
             size="mini"
             type="danger"
+            icon="el-icon-delete"
             @click="handleDelete(scope.$index, scope.row)"
-          >删除</el-button>
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -150,19 +159,48 @@ export default {
      * @param row 选中行数据
      */
     handleDelete(index, row) {
-      const ids = [row.id]
-      this.delPropertyByIds(ids)
+      this.ids = [row.id]
+      this.delProperty()
+    },
+    /**
+     * 编辑按钮
+     * @param index 行数
+     * @param row 选中行数据
+     */
+    handleEdit(index, row) {
+      this.$router.push({ name: 'PropertyEdit', query: { propertyId: row.id }})
     },
     /**
      * 根据物业ID集合删除物业信息
-     * @param ids ID集合
      */
-    delPropertyByIds(ids) {
+    delProperty() {
+      const ids = this.ids
       delPropertyByIds(ids).then((res) => {
-        this.$message.success('删除成功')
+        this.$message.success(res.message)
         this.listPropertyByPage()
       })
     }
   }
 }
 </script>
+<style scoped>
+.head{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.head>button{
+  margin-bottom: 0!important;
+}
+.search-box{
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 20px;
+}
+.search-box>button{
+  margin-left: 10px;
+}
+</style>
