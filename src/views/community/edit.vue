@@ -1,17 +1,41 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="formRules" label-width="120px">
-      <el-form-item label="物业名称" prop="name">
+      <el-form-item label="小区名称：" prop="name">
         <el-input v-model="form.name" style="width: 500px" />
       </el-form-item>
-      <el-form-item>
-        <el-radio-group v-if="form.id" v-model="form.status">
+      <el-form-item label="小区地址:" prop="address">
+        <el-input v-model="form.address" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="车位平面图:" prop="path">
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="form.path" :src="form.path" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="所属物业:" prop="propertyId">
+        <el-select v-model="form.propertyId" filterable clearable placeholder="请选择物业">
+          <el-option
+            v-for="item in propertyList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="form.id" label="审核状态:">
+        <el-radio-group v-model="form.status">
           <el-radio-button label="0">正在审核</el-radio-button>
           <el-radio-button label="1">审核通过</el-radio-button>
           <el-radio-button label="2">审核失败</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="onCancel">取消</el-button>
       </el-form-item>
@@ -20,36 +44,54 @@
 </template>
 
 <script>
-import { saveProperty, getPropertyById } from '@/api/property'
+import { saveCommunity, getCommunityById } from '@/api/community'
+import { listPropertyAll } from '@/api/property'
 export default {
-  name: 'PropertyEdit',
+  name: 'CommunityEdit',
   data() {
     return {
       // 表单数据
       form: {
-        // 物业ID
+        // 小区ID
         id: '',
-        // 物业名称
+        // 小区名称
         name: '',
         // 审核状态
-        status: ''
+        status: '',
+        // 物业ID
+        propertyId: '',
+        // 车位平面图路径
+        path: ''
       },
+      // 物业集合
+      propertyList: [],
       // 表单验证规则
       formRules: {
         name: [
-          { required: true, message: '请输物业名称', trigger: 'blur' }
+          { required: true, message: '请输小区名称', trigger: 'blur' }
+        ],
+        address: [
+          { required: true, message: '请输小区地址', trigger: 'blur' }
+        ],
+        propertyId: [
+          { required: true, message: '请选择物业', trigger: 'blur' }
+        ],
+        path: [
+          { required: true, message: '请上传小区平面图', trigger: 'blur' }
         ]
       }
     }
   },
   mounted() {
+    // 查询物业数据
+    this.listPropertyAll()
     // 获取父页面传入进来的ID
-    const propertyId = this.$route.query.propertyId
-    if (propertyId) {
-      this.form.id = propertyId
+    const communityId = this.$route.query.communityId
+    if (communityId) {
+      this.form.id = communityId
     }
     // 加载表格数据
-    this.getPropertyById()
+    this.getCommunityById()
   },
   methods: {
     /**
@@ -62,11 +104,19 @@ export default {
           return
         }
         // 调用保存方法
-        saveProperty(form).then((res) => {
+        saveCommunity(form).then((res) => {
           this.$message.success(res.message)
           // 返回上一级页面
           this.onCancel()
         })
+      })
+    },
+    /**
+     * 查询全部物业
+     */
+    listPropertyAll() {
+      listPropertyAll().then((res) => {
+        this.propertyList = res.data
       })
     },
     /**
@@ -76,17 +126,16 @@ export default {
       this.$router.go(-1)
     },
     /**
-     * 根据ID查询物业信息
+     * 根据ID查询小区信息
      */
-    getPropertyById() {
+    getCommunityById() {
       const formId = this.form.id
       if (!formId) {
         return
       }
-      getPropertyById(formId).then((res) => {
+      getCommunityById(formId).then((res) => {
         const data = res.data
-        this.form.name = data.name
-        this.form.status = data.status
+        Object.assign(this.form, data)
       })
     }
   }
@@ -94,5 +143,28 @@ export default {
 </script>
 
 <style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
 

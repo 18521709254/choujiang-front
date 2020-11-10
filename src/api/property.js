@@ -13,6 +13,16 @@ export function listPropertyByPage(postData) {
 }
 
 /**
+ * 查询全部物业
+ */
+export function listPropertyAll() {
+  return request({
+    url: '/property/listPropertyAll',
+    method: 'post'
+  })
+}
+
+/**
  * 保存物业
  * @param postData 物业管理数据
  */

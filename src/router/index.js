@@ -102,10 +102,10 @@ export const constantRoutes = [
   },
   /** **************** 宋凯翔新增页面 *********************/
   {
-    path: '/',
+    path: '/property',
     component: Layout,
     redirect: '/property/list',
-    name: 'Example',
+    name: 'Property',
     meta: { title: '物业管理', icon: 'el-icon-s-help' },
     children: [
       {
@@ -123,10 +123,10 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/',
+    path: '/community',
     component: Layout,
     redirect: '/community/list',
-    name: 'Example',
+    name: 'Community',
     meta: { title: '小区管理', icon: 'el-icon-s-help' },
     children: [
       {

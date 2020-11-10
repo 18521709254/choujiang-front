@@ -25,9 +25,14 @@
         type="selection"
         width="55"
       />
-      <el-table-column label="物业名称">
+      <el-table-column label="小区名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="小区地址">
+        <template slot-scope="scope">
+          {{ scope.row.address }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="审核状态" width="110" align="center">
@@ -168,10 +173,10 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'CommunityEdit', query: { propertyId: row.id }})
+      this.$router.push({ name: 'CommunityEdit', query: { communityId: row.id }})
     },
     /**
-     * 根据物业ID集合删除物业信息
+     * 根据小区ID集合删除小区信息
      */
     delCommunity() {
       const ids = this.ids

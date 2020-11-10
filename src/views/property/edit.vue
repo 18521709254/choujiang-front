@@ -1,17 +1,17 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="formRules" label-width="120px">
-      <el-form-item label="物业名称" prop="name">
+      <el-form-item label="物业名称:" prop="name">
         <el-input v-model="form.name" style="width: 500px" />
       </el-form-item>
-      <el-form-item>
-        <el-radio-group v-if="form.id" v-model="form.status">
+      <el-form-item label="审核状态:" v-if="form.id">
+        <el-radio-group  v-model="form.status">
           <el-radio-button label="0">正在审核</el-radio-button>
           <el-radio-button label="1">审核通过</el-radio-button>
           <el-radio-button label="2">审核失败</el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="onCancel">取消</el-button>
       </el-form-item>
@@ -85,8 +85,7 @@ export default {
       }
       getPropertyById(formId).then((res) => {
         const data = res.data
-        this.form.name = data.name
-        this.form.status = data.status
+        Object.assign(this.form, data)
       })
     }
   }
