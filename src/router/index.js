@@ -142,6 +142,26 @@ export const constantRoutes = [
         meta: { title: 'CommunityEdit', icon: 'tree' }
       }
     ]
+  }, {
+    path: '/member',
+    component: Layout,
+    redirect: '/member/list',
+    name: 'Member',
+    meta: { title: '会员管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '会员查询',
+        component: () => import('@/views/member/list'),
+        meta: { title: '会员查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'MemberEdit',
+        component: () => import('@/views/member/edit'),
+        meta: { title: 'MemberEdit', icon: 'tree' }
+      }
+    ]
   },
 
   // 404 page must be placed at the end !!!
