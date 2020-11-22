@@ -13,6 +13,16 @@ export function listCommunityByPage(postData) {
 }
 
 /**
+ * 查询全部小区
+ */
+export function listCommunityAll() {
+  return request({
+    url: '/community/listCommunityAll',
+    method: 'post'
+  })
+}
+
+/**
  * 保存小区
  * @param postData 小区管理数据
  */

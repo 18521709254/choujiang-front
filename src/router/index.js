@@ -163,6 +163,27 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/space',
+    component: Layout,
+    redirect: '/space/list',
+    name: '车位管理',
+    meta: { title: '车位管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '车位查询',
+        component: () => import('@/views/space/list'),
+        meta: { title: '车位查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'SpaceEdit',
+        component: () => import('@/views/space/edit'),
+        meta: { title: 'SpaceEdit', icon: 'tree' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
