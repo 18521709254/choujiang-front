@@ -56,3 +56,17 @@ export function delCommunityByIds(communityIds) {
   })
 }
 
+/**
+ * 根据ID集合删除小区
+ * @param file 图片文件
+ */
+export function uploadImage(file) {
+  const postData = new FormData()
+  postData.append('uploadFile', file)
+  return request({
+    url: '/community/uploadImage',
+    method: 'post',
+    data: postData
+  })
+}
+

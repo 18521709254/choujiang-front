@@ -100,7 +100,7 @@ export default {
         ],
         no: [
           { required: true, message: '请输入车位编号', trigger: 'blur' }
-        ],
+        ]
         // path: [
         //   { required: true, message: '请上传车位平面图', trigger: 'blur' }
         // ]
@@ -119,6 +119,26 @@ export default {
     this.getSpaceById()
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    /**
+     * 上传图片方法
+     */
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+      }
+      uploadImage(file).then((res) => {
+        console.log('测试上传')
+      })
+      return isJPG && isLt2M
+    },
     /**
      * 数据保存
      */

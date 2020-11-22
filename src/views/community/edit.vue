@@ -13,9 +13,10 @@
           action="https://jsonplaceholder.typicode.com/posts/"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
+          :before-upload="beforeAvatarUpload"
+        >
           <img v-if="form.path" :src="form.path" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <i v-else class="el-icon-plus avatar-uploader-icon" />
         </el-upload>
       </el-form-item>
       <el-form-item label="所属物业:" prop="propertyId">
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-import { saveCommunity, getCommunityById } from '@/api/community'
+import { saveCommunity, getCommunityById, uploadImage } from '@/api/community'
 import { listPropertyAll } from '@/api/property'
 export default {
   name: 'CommunityEdit',
@@ -94,6 +95,30 @@ export default {
     this.getCommunityById()
   },
   methods: {
+
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    /**
+     * 上传图片方法
+     */
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isJPG) {
+        this.$message.error('上传头像图片只能是 JPG 格式!')
+        return false
+      }
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+        return false
+      }
+      uploadImage(file).then((res) => {
+        console.log('测试上传')
+      })
+      return true
+    },
+
     /**
      * 数据保存
      */
