@@ -25,6 +25,11 @@
         type="selection"
         width="55"
       />
+      <el-table-column label="所属小区">
+        <template slot-scope="scope">
+          {{ scope.row.communityName }}
+        </template>
+      </el-table-column>
       <el-table-column label="车位编号">
         <template slot-scope="scope">
             {{ scope.row.no }}
@@ -47,12 +52,12 @@
       </el-table-column>
       <el-table-column class-name="status-col" label="车位类型" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.type | statusFilter">{{ scope.row.type | statusType }}</el-tag>
+          <el-tag :type="scope.row.type | statusFilter">{{ scope.row.type | statusCheckType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="使用状态" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.useStatus | statusFilter">{{ scope.row.useStatus | statusType }}</el-tag>
+          <el-tag :type="scope.row.useStatus | statusFilter">{{ scope.row.useStatus | statusUserType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">

@@ -178,7 +178,6 @@ export default {
      */
     listCommunityAll() {
       listCommunityAll().then((res) => {
-        debugger
         this.communityList = res.data
       })
     },
