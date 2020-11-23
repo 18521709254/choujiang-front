@@ -38,6 +38,19 @@
           />
         </el-select>
       </el-form-item>
+      <el-form-item label="车位类型:">
+        <el-radio-group v-model="form.type">
+          <el-radio-button label="1">物业</el-radio-button>
+          <el-radio-button label="2">私人</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item v-if="form.id" label="车位使用状态:">
+        <el-radio-group v-model="form.useStatus">
+          <el-radio-button label="0">暂停使用</el-radio-button>
+          <el-radio-button label="1">空闲</el-radio-button>
+          <el-radio-button label="2">使用中</el-radio-button>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item v-if="form.id" label="审核状态:">
         <el-radio-group v-model="form.status">
           <el-radio-button label="0">正在审核</el-radio-button>
@@ -68,6 +81,10 @@ export default {
         name: '',
         // 停车单价/每小时
         price: '',
+        // 车位类型：1-物业、2-私人
+        type: '',
+        // 车位使用状态：0-暂停租用、1-空闲、2-使用中
+        useStatus: '',
         // 费用占比
         percent: '',
         // 车位编号
@@ -161,6 +178,7 @@ export default {
      */
     listCommunityAll() {
       listCommunityAll().then((res) => {
+        debugger
         this.communityList = res.data
       })
     },

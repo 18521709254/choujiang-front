@@ -25,19 +25,34 @@
         type="selection"
         width="55"
       />
-      <el-table-column label="车位名称">
+      <el-table-column label="车位编号">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+            {{ scope.row.no }}
         </template>
       </el-table-column>
-      <el-table-column label="车位地址">
+      <el-table-column label="费用占比">
         <template slot-scope="scope">
-          {{ scope.row.address }}
+          {{ scope.row.percent }}
+        </template>
+      </el-table-column>
+      <el-table-column label="单价/每小时">
+        <template slot-scope="scope">
+          {{ scope.row.price }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="审核状态" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
+          <el-tag :type="scope.row.checkStatus | statusFilter">{{ scope.row.checkStatus | statusType }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="车位类型" width="110" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.type | statusFilter">{{ scope.row.type | statusType }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="使用状态" width="110" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.useStatus | statusFilter">{{ scope.row.useStatus | statusType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -89,6 +104,21 @@ export default {
         0: '正在审核',
         1: '审核通过',
         2: '审核失败'
+      }
+      return statusMap[status]
+    },
+    statusCheckType(status) {
+      const statusMap = {
+        1: '物业',
+        2: '私人'
+      }
+      return statusMap[status]
+    },
+    statusUserType(status) {
+      const statusMap = {
+        0: '暂停租用',
+        1: '空闲',
+        2: '使用中'
       }
       return statusMap[status]
     }

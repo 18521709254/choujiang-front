@@ -10,7 +10,7 @@
       <el-form-item label="车位平面图:" prop="path">
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="#"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -77,9 +77,9 @@ export default {
         propertyId: [
           { required: true, message: '请选择物业', trigger: 'blur' }
         ],
-        path: [
-          { required: true, message: '请上传小区平面图', trigger: 'blur' }
-        ]
+        // path: [
+        //   { required: true, message: '请上传小区平面图', trigger: 'blur' }
+        // ]
       }
     }
   },
@@ -95,8 +95,8 @@ export default {
     this.getCommunityById()
   },
   methods: {
-
     handleAvatarSuccess(res, file) {
+      debugger
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     /**
@@ -108,8 +108,9 @@ export default {
         this.$message.error('上传头像图片大小不能超过 2MB!')
         return false
       }
+      // 上传图片
       uploadImage(file).then((res) => {
-        console.log('测试上传')
+
       })
       return true
     },
