@@ -61,6 +61,8 @@ export default {
         status: '',
         // 物业ID
         propertyId: '',
+        // 地址
+        address: '',
         // 车位平面图路径
         path: ''
       },
@@ -76,7 +78,7 @@ export default {
         ],
         propertyId: [
           { required: true, message: '请选择物业', trigger: 'blur' }
-        ],
+        ]
         // path: [
         //   { required: true, message: '请上传小区平面图', trigger: 'blur' }
         // ]

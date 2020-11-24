@@ -30,7 +30,7 @@ export function saveSpace(postData) {
  */
 export function getSpaceById(spaceId) {
   return request({
-    url: '/space/getSpaceById?spaceId=' + spaceId,
+    url: '/space/getParkingSpaceById?spaceId=' + spaceId,
     method: 'post'
   })
 }
