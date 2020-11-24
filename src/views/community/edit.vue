@@ -96,7 +96,6 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res, file) {
-      debugger
       this.imageUrl = URL.createObjectURL(file.raw)
     },
     /**
@@ -110,7 +109,7 @@ export default {
       }
       // 上传图片
       uploadImage(file).then((res) => {
-
+        this.form.path = res.data.filePath
       })
       return true
     },
