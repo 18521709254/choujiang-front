@@ -102,10 +102,10 @@ export const constantRoutes = [
   },
   /** **************** 张文雅新增页面 *********************/
   {
-    path: '/',
+    path: '/property',
     component: Layout,
     redirect: '/property/list',
-    name: 'Example',
+    name: 'Property',
     meta: { title: '物业管理', icon: 'el-icon-s-help' },
     children: [
       {
@@ -115,10 +115,72 @@ export const constantRoutes = [
         meta: { title: '物业查询', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: '树结构',
-        component: () => import('@/views/tree/index'),
-        meta: { title: '树结构', icon: 'tree' }
+        path: 'edit',
+        name: 'PropertyEdit',
+        component: () => import('@/views/property/edit'),
+        meta: { title: 'PropertyEdit', icon: 'tree' }
+      }
+    ]
+  },
+  {
+    path: '/community',
+    component: Layout,
+    redirect: '/community/list',
+    name: 'Community',
+    meta: { title: '小区管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '小区查询',
+        component: () => import('@/views/community/list'),
+        meta: { title: '小区查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'CommunityEdit',
+        component: () => import('@/views/community/edit'),
+        meta: { title: 'CommunityEdit', icon: 'tree' }
+      }
+    ]
+  }, {
+    path: '/member',
+    component: Layout,
+    redirect: '/member/list',
+    name: 'Member',
+    meta: { title: '会员管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '会员查询',
+        component: () => import('@/views/member/list'),
+        meta: { title: '会员查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'MemberEdit',
+        component: () => import('@/views/member/edit'),
+        meta: { title: 'MemberEdit', icon: 'tree' }
+      }
+    ]
+  },
+  {
+    path: '/space',
+    component: Layout,
+    redirect: '/space/list',
+    name: '车位管理',
+    meta: { title: '车位管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '车位查询',
+        component: () => import('@/views/space/list'),
+        meta: { title: '车位查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'SpaceEdit',
+        component: () => import('@/views/space/edit'),
+        meta: { title: 'SpaceEdit', icon: 'tree' }
       }
     ]
   },
@@ -128,7 +190,8 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'hash',
+  base: process.env.BASE_URL,
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

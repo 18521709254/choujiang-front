@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="head">
-      <el-button type="primary" @click="addProperty">新增</el-button>
-      <el-button type="danger" @click="delProperty">删除</el-button>
+      <el-button type="primary" @click="addCommunity">新增</el-button>
+      <el-button type="danger" @click="delCommunity">删除</el-button>
       <div class="search-box">
         <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
-        <el-button type="warning" @click="listPropertyByPage">查询</el-button>
+        <el-button type="warning" @click="listCommunityByPage">查询</el-button>
       </div>
     </div>
     <el-table
@@ -25,9 +25,14 @@
         type="selection"
         width="55"
       />
-      <el-table-column label="物业名称">
+      <el-table-column label="小区名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="小区地址">
+        <template slot-scope="scope">
+          {{ scope.row.address }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="审核状态" width="110" align="center">
@@ -67,9 +72,9 @@
 </template>
 
 <script>
-import { listPropertyByPage, delPropertyByIds } from '@/api/property'
+import { listCommunityByPage, delCommunityByIds } from '@/api/community'
 export default {
-  name: 'PropertyList',
+  name: 'CommunityList',
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -108,17 +113,17 @@ export default {
     }
   },
   created() {
-    this.listPropertyByPage()
+    this.listCommunityByPage()
   },
   methods: {
     /**
      * 数据查询
      */
-    listPropertyByPage() {
+    listCommunityByPage() {
       this.listLoading = true
       const { pageInfo, name } = this
       const postData = { pageInfo: pageInfo, name: name }
-      listPropertyByPage(postData).then((res) => {
+      listCommunityByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
         this.list = data.list
@@ -128,8 +133,8 @@ export default {
     /**
      * 新增页面组件
      */
-    addProperty() {
-      this.$router.push({ name: 'PropertyEdit' })
+    addCommunity() {
+      this.$router.push({ name: 'CommunityEdit' })
     },
     /**
      * 多选框change事件
@@ -143,7 +148,7 @@ export default {
      */
     handleSizeChange(value) {
       this.pageInfo.pageSize = value
-      this.listPropertyByPage()
+      this.listCommunityByPage()
     },
     /**
      * 分页跳转
@@ -151,7 +156,7 @@ export default {
      */
     handleCurrentChange(value) {
       this.pageInfo.pageNum = value
-      this.listPropertyByPage()
+      this.listCommunityByPage()
     },
     /**
      * 删除按钮
@@ -160,7 +165,7 @@ export default {
      */
     handleDelete(index, row) {
       this.ids = [row.id]
-      this.delProperty()
+      this.delCommunity()
     },
     /**
      * 编辑按钮
@@ -168,16 +173,16 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'PropertyEdit', query: { propertyId: row.id }})
+      this.$router.push({ name: 'CommunityEdit', query: { communityId: row.id }})
     },
     /**
-     * 根据物业ID集合删除物业信息
+     * 根据小区ID集合删除小区信息
      */
-    delProperty() {
+    delCommunity() {
       const ids = this.ids
-      delPropertyByIds(ids).then((res) => {
+      delCommunityByIds(ids).then((res) => {
         this.$message.success(res.message)
-        this.listPropertyByPage()
+        this.listCommunityByPage()
       })
     }
   }

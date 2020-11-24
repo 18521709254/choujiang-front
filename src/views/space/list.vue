@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="head">
-      <el-button type="primary" @click="addProperty">新增</el-button>
-      <el-button type="danger" @click="delProperty">删除</el-button>
+      <el-button type="primary" @click="addSpace">新增</el-button>
+      <el-button type="danger" @click="delSpace">删除</el-button>
       <div class="search-box">
         <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
-        <el-button type="warning" @click="listPropertyByPage">查询</el-button>
+        <el-button type="warning" @click="listSpaceByPage">查询</el-button>
       </div>
     </div>
     <el-table
@@ -25,14 +25,39 @@
         type="selection"
         width="55"
       />
-      <el-table-column label="物业名称">
+      <el-table-column label="所属小区">
         <template slot-scope="scope">
-          {{ scope.row.name }}
+          {{ scope.row.communityName }}
+        </template>
+      </el-table-column>
+      <el-table-column label="车位编号">
+        <template slot-scope="scope">
+            {{ scope.row.no }}
+        </template>
+      </el-table-column>
+      <el-table-column label="费用占比">
+        <template slot-scope="scope">
+          {{ scope.row.percent }}
+        </template>
+      </el-table-column>
+      <el-table-column label="单价/每小时">
+        <template slot-scope="scope">
+          {{ scope.row.price }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="审核状态" width="110" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
+          <el-tag :type="scope.row.checkStatus | statusFilter">{{ scope.row.checkStatus | statusType }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="车位类型" width="110" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.type | statusFilter">{{ scope.row.type | statusCheckType }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="使用状态" width="110" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.useStatus | statusFilter">{{ scope.row.useStatus | statusUserType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -67,9 +92,9 @@
 </template>
 
 <script>
-import { listPropertyByPage, delPropertyByIds } from '@/api/property'
+import { listSpaceByPage, delSpaceByIds } from '@/api/space'
 export default {
-  name: 'PropertyList',
+  name: 'SpaceList',
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -84,6 +109,21 @@ export default {
         0: '正在审核',
         1: '审核通过',
         2: '审核失败'
+      }
+      return statusMap[status]
+    },
+    statusCheckType(status) {
+      const statusMap = {
+        1: '物业',
+        2: '私人'
+      }
+      return statusMap[status]
+    },
+    statusUserType(status) {
+      const statusMap = {
+        0: '暂停租用',
+        1: '空闲',
+        2: '使用中'
       }
       return statusMap[status]
     }
@@ -108,17 +148,17 @@ export default {
     }
   },
   created() {
-    this.listPropertyByPage()
+    this.listSpaceByPage()
   },
   methods: {
     /**
      * 数据查询
      */
-    listPropertyByPage() {
+    listSpaceByPage() {
       this.listLoading = true
       const { pageInfo, name } = this
       const postData = { pageInfo: pageInfo, name: name }
-      listPropertyByPage(postData).then((res) => {
+      listSpaceByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
         this.list = data.list
@@ -128,8 +168,8 @@ export default {
     /**
      * 新增页面组件
      */
-    addProperty() {
-      this.$router.push({ name: 'PropertyEdit' })
+    addSpace() {
+      this.$router.push({ name: 'SpaceEdit' })
     },
     /**
      * 多选框change事件
@@ -143,7 +183,7 @@ export default {
      */
     handleSizeChange(value) {
       this.pageInfo.pageSize = value
-      this.listPropertyByPage()
+      this.listSpaceByPage()
     },
     /**
      * 分页跳转
@@ -151,7 +191,7 @@ export default {
      */
     handleCurrentChange(value) {
       this.pageInfo.pageNum = value
-      this.listPropertyByPage()
+      this.listSpaceByPage()
     },
     /**
      * 删除按钮
@@ -160,7 +200,7 @@ export default {
      */
     handleDelete(index, row) {
       this.ids = [row.id]
-      this.delProperty()
+      this.delSpace()
     },
     /**
      * 编辑按钮
@@ -168,16 +208,16 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'PropertyEdit', query: { propertyId: row.id }})
+      this.$router.push({ name: 'SpaceEdit', query: { spaceId: row.id }})
     },
     /**
-     * 根据物业ID集合删除物业信息
+     * 根据车位ID集合删除车位信息
      */
-    delProperty() {
+    delSpace() {
       const ids = this.ids
-      delPropertyByIds(ids).then((res) => {
+      delSpaceByIds(ids).then((res) => {
         this.$message.success(res.message)
-        this.listPropertyByPage()
+        this.listSpaceByPage()
       })
     }
   }

@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="head">
-      <el-button type="primary" @click="addProperty">新增</el-button>
-      <el-button type="danger" @click="delProperty">删除</el-button>
+      <el-button type="primary" @click="addMember">新增</el-button>
+      <el-button type="danger" @click="delMember">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
-        <el-button type="warning" @click="listPropertyByPage">查询</el-button>
+        <el-input v-model="name" maxlength="50" placeholder="请输入名称进行查询" />
+        <el-button type="warning" @click="listMemberByPage">查询</el-button>
       </div>
     </div>
     <el-table
@@ -25,14 +25,24 @@
         type="selection"
         width="55"
       />
-      <el-table-column label="物业名称">
+      <el-table-column label="会员名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="审核状态" width="110" align="center">
+      <el-table-column label="会员账号">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
+          {{ scope.row.account }}
+        </template>
+      </el-table-column>
+      <el-table-column label="联系方式">
+        <template slot-scope="scope">
+          {{ scope.row.tel }}
+        </template>
+      </el-table-column>
+      <el-table-column class-name="status-col" label="性别" width="110" align="center">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.sex | statusFilter">{{ scope.row.sex | statusType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -42,13 +52,13 @@
             type="primary"
             icon="el-icon-edit"
             @click="handleEdit(scope.$index, scope.row)"
-          ></el-button>
+          />
           <el-button
             size="mini"
             type="danger"
             icon="el-icon-delete"
             @click="handleDelete(scope.$index, scope.row)"
-          ></el-button>
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -67,9 +77,9 @@
 </template>
 
 <script>
-import { listPropertyByPage, delPropertyByIds } from '@/api/property'
+import { listMemberByPage, delMemberByIds } from '@/api/member'
 export default {
-  name: 'PropertyList',
+  name: 'MemberList',
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -81,9 +91,8 @@ export default {
     },
     statusType(status) {
       const statusMap = {
-        0: '正在审核',
-        1: '审核通过',
-        2: '审核失败'
+        0: '女',
+        1: '男'
       }
       return statusMap[status]
     }
@@ -108,17 +117,17 @@ export default {
     }
   },
   created() {
-    this.listPropertyByPage()
+    this.listMemberByPage()
   },
   methods: {
     /**
      * 数据查询
      */
-    listPropertyByPage() {
+    listMemberByPage() {
       this.listLoading = true
       const { pageInfo, name } = this
       const postData = { pageInfo: pageInfo, name: name }
-      listPropertyByPage(postData).then((res) => {
+      listMemberByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
         this.list = data.list
@@ -128,8 +137,8 @@ export default {
     /**
      * 新增页面组件
      */
-    addProperty() {
-      this.$router.push({ name: 'PropertyEdit' })
+    addMember() {
+      this.$router.push({ name: 'MemberEdit' })
     },
     /**
      * 多选框change事件
@@ -143,7 +152,7 @@ export default {
      */
     handleSizeChange(value) {
       this.pageInfo.pageSize = value
-      this.listPropertyByPage()
+      this.listMemberByPage()
     },
     /**
      * 分页跳转
@@ -151,7 +160,7 @@ export default {
      */
     handleCurrentChange(value) {
       this.pageInfo.pageNum = value
-      this.listPropertyByPage()
+      this.listMemberByPage()
     },
     /**
      * 删除按钮
@@ -160,7 +169,7 @@ export default {
      */
     handleDelete(index, row) {
       this.ids = [row.id]
-      this.delProperty()
+      this.delMember()
     },
     /**
      * 编辑按钮
@@ -168,16 +177,16 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'PropertyEdit', query: { propertyId: row.id }})
+      this.$router.push({ name: 'MemberEdit', query: { memberId: row.id }})
     },
     /**
-     * 根据物业ID集合删除物业信息
+     * 根据会员ID集合删除会员信息
      */
-    delProperty() {
+    delMember() {
       const ids = this.ids
-      delPropertyByIds(ids).then((res) => {
+      delMemberByIds(ids).then((res) => {
         this.$message.success(res.message)
-        this.listPropertyByPage()
+        this.listMemberByPage()
       })
     }
   }
