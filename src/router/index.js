@@ -183,7 +183,27 @@ export const constantRoutes = [
         meta: { title: 'RoleEdit', icon: 'tree' }
       }
     ]
-  },{
+  }, {
+    path: '/bill',
+    component: Layout,
+    redirect: '/bill/list',
+    name: 'Bill',
+    meta: { title: '订单管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '订单查询',
+        component: () => import('@/views/bill/list'),
+        meta: { title: '订单查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'BillEdit',
+        component: () => import('@/views/bill/edit'),
+        meta: { title: 'RoleEdit', icon: 'tree' }
+      }
+    ]
+  }, {
     path: '/member',
     component: Layout,
     redirect: '/member/list',

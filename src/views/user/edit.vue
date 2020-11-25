@@ -8,16 +8,20 @@
         <el-input v-model="form.account" style="width: 500px" />
       </el-form-item>
       <el-form-item label="账号密码:" prop="password">
-        <el-input v-model="form.password" style="width: 500px" />
+        <el-input v-model="form.password" show-password style="width: 500px" />
       </el-form-item>
       <el-form-item label="联系方式:" prop="tel">
         <el-input v-model="form.tel" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="sex" prop="sex">
-        <el-radio-group v-model="form.sex">
-          <el-radio-button label="1">男</el-radio-button>
-          <el-radio-button label="0">女</el-radio-button>
-        </el-radio-group>
+      <el-form-item label="角色:" prop="roleId">
+        <el-select v-model="form.roleId" filterable clearable placeholder="请选择角色">
+          <el-option
+            v-for="item in roleList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -29,6 +33,8 @@
 
 <script>
 import { saveUser, getUserById } from '@/api/user'
+import { listRoleAll } from '@/api/role'
+
 export default {
   name: 'UserEdit',
   data() {
@@ -43,11 +49,13 @@ export default {
         account: '',
         // 密码
         password: '',
+        // 角色ID
+        roleId: '',
         // 联系方式
         tel: '',
-        // 性别
-        sex: ''
       },
+      // 角色管理
+      roleList: [],
       // 表单验证规则
       formRules: {
         name: [
@@ -61,9 +69,6 @@ export default {
         ],
         tel: [
           { required: true, message: '请输入联系方式', trigger: 'blur' }
-        ],
-        sex: [
-          { required: true, message: '请选择性别', trigger: 'blur' }
         ]
       }
     }
@@ -76,8 +81,18 @@ export default {
     }
     // 加载表格数据
     this.getUserById()
+    // 查询全部角色
+    this.listRoleAll()
   },
   methods: {
+    /**
+     * 插叙全部橘色
+     */
+    listRoleAll() {
+      listRoleAll().then((res) => {
+        this.roleList = res.data
+      })
+    },
     /**
      * 数据保存
      */
@@ -93,14 +108,6 @@ export default {
           // 返回上一级页面
           this.onCancel()
         })
-      })
-    },
-    /**
-     * 查询全部物业
-     */
-    listPropertyAll() {
-      listPropertyAll().then((res) => {
-        this.propertyList = res.data
       })
     },
     /**

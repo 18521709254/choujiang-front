@@ -13,6 +13,16 @@ export function listMemberByPage(postData) {
 }
 
 /**
+ * 查询全部会员
+ */
+export function listMemberAll() {
+  return request({
+    url: '/member/listMemberAll',
+    method: 'post'
+  })
+}
+
+/**
  * 保存会员
  * @param postData 会员管理数据
  */

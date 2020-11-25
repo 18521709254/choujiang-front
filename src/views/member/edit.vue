@@ -8,7 +8,7 @@
         <el-input v-model="form.account" style="width: 500px" />
       </el-form-item>
       <el-form-item label="账号密码:" prop="password">
-        <el-input v-model="form.password" style="width: 500px" />
+        <el-input v-model="form.password" show-password style="width: 500px" />
       </el-form-item>
       <el-form-item label="联系方式:" prop="tel">
         <el-input v-model="form.tel" style="width: 500px" />
