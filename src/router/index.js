@@ -142,7 +142,48 @@ export const constantRoutes = [
         meta: { title: 'CommunityEdit', icon: 'tree' }
       }
     ]
+  },
+  {
+    path: '/user',
+    component: Layout,
+    redirect: '/user/list',
+    name: 'User',
+    meta: { title: '用户管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '用户查询',
+        component: () => import('@/views/user/list'),
+        meta: { title: '用户查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'UserEdit',
+        component: () => import('@/views/user/edit'),
+        meta: { title: 'UserEdit', icon: 'tree' }
+      }
+    ]
   }, {
+    path: '/role',
+    component: Layout,
+    redirect: '/role/list',
+    name: 'Role',
+    meta: { title: '角色管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'list',
+        name: '角色查询',
+        component: () => import('@/views/role/list'),
+        meta: { title: '角色查询', icon: 'table' }
+      },
+      {
+        path: 'edit',
+        name: 'RoleEdit',
+        component: () => import('@/views/role/edit'),
+        meta: { title: 'RoleEdit', icon: 'tree' }
+      }
+    ]
+  },{
     path: '/member',
     component: Layout,
     redirect: '/member/list',
