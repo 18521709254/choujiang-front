@@ -41,6 +41,8 @@ export default {
         name: '',
         // 会员账号
         account: '',
+        // 密码
+        password: '',
         // 联系方式
         tel: '',
         // 性别
