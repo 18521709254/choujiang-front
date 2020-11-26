@@ -13,6 +13,17 @@ export function listSpaceByPage(postData) {
 }
 
 /**
+ * 根据小区ID获取车位信息
+ * @param communityId 小区ID
+ */
+export function listSpaceByCommunityId(communityId) {
+  return request({
+    url: '/space/listSpaceByCommunityId?communityId=' + communityId,
+    method: 'post'
+  })
+}
+
+/**
  * 保存车位
  * @param postData 车位管理数据
  */

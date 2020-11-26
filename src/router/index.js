@@ -110,13 +110,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '物业查询',
+        name: '物业管理',
         component: () => import('@/views/property/list'),
-        meta: { title: '物业查询', icon: 'table' }
+        meta: { title: '物业管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'PropertyEdit',
+        hidden: true,
         component: () => import('@/views/property/edit'),
         meta: { title: 'PropertyEdit', icon: 'tree' }
       }
@@ -131,13 +132,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '小区查询',
+        name: '小区管理',
         component: () => import('@/views/community/list'),
-        meta: { title: '小区查询', icon: 'table' }
+        meta: { title: '小区管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'CommunityEdit',
+        hidden: true,
         component: () => import('@/views/community/edit'),
         meta: { title: 'CommunityEdit', icon: 'tree' }
       }
@@ -152,13 +154,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '用户查询',
+        name: '用户管理',
         component: () => import('@/views/user/list'),
-        meta: { title: '用户查询', icon: 'table' }
+        meta: { title: '用户管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'UserEdit',
+        hidden: true,
         component: () => import('@/views/user/edit'),
         meta: { title: 'UserEdit', icon: 'tree' }
       }
@@ -172,13 +175,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '角色查询',
+        name: '角色管理',
         component: () => import('@/views/role/list'),
-        meta: { title: '角色查询', icon: 'table' }
+        meta: { title: '角色管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'RoleEdit',
+        hidden: true,
         component: () => import('@/views/role/edit'),
         meta: { title: 'RoleEdit', icon: 'tree' }
       }
@@ -192,13 +196,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '订单查询',
+        name: '订单管理',
         component: () => import('@/views/bill/list'),
-        meta: { title: '订单查询', icon: 'table' }
+        meta: { title: '订单管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'BillEdit',
+        hidden: true,
         component: () => import('@/views/bill/edit'),
         meta: { title: 'RoleEdit', icon: 'tree' }
       }
@@ -212,13 +217,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '会员查询',
+        name: '会员管理',
         component: () => import('@/views/member/list'),
-        meta: { title: '会员查询', icon: 'table' }
+        meta: { title: '会员管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'MemberEdit',
+        hidden: true,
         component: () => import('@/views/member/edit'),
         meta: { title: 'MemberEdit', icon: 'tree' }
       }
@@ -233,13 +239,14 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: '车位查询',
+        name: '车位管理',
         component: () => import('@/views/space/list'),
-        meta: { title: '车位查询', icon: 'table' }
+        meta: { title: '车位管理', icon: 'table' }
       },
       {
         path: 'edit',
         name: 'SpaceEdit',
+        hidden: true,
         component: () => import('@/views/space/edit'),
         meta: { title: 'SpaceEdit', icon: 'tree' }
       }

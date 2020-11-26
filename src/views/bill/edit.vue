@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="formRules" label-width="120px">
-      <el-form-item label="开始时间：" prop="startDate">
+      <el-form-item v-if="form.id" label="开始时间：" prop="startDate">
         <el-date-picker
           v-model="form.startDate"
           type="datetime"
@@ -9,7 +9,7 @@
           placeholder="选择日期时间"
         />
       </el-form-item>
-      <el-form-item label="结束时间:" prop="endDate">
+      <el-form-item v-if="form.id" label="结束时间:" prop="endDate">
         <el-date-picker
           v-model="form.endDate"
           type="datetime"
@@ -17,8 +17,38 @@
           placeholder="选择日期时间"
         />
       </el-form-item>
+      <el-form-item label="物业:" prop="propertyId">
+        <el-select v-model="form.propertyId" filterable clearable placeholder="请选择物业" @change="listCommunityByPropertyId">
+          <el-option
+            v-for="item in propertyList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="小区:" prop="communityId">
+        <el-select v-model="form.communityId" filterable clearable placeholder="请选择小区" @change="listSpaceByCommunityId">
+          <el-option
+            v-for="item in communityList"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="车位:" prop="parkingSpaceId">
+        <el-select v-model="form.parkingSpaceId" filterable clearable placeholder="请选择车位">
+          <el-option
+            v-for="item in spaceList"
+            :key="item.id"
+            :label="item.no"
+            :value="item.id"
+          />
+        </el-select>
+      </el-form-item>
       <el-form-item label="停车会员:" prop="memberId">
-        <el-select v-model="form.memberId" filterable clearable placeholder="请选择物业">
+        <el-select v-model="form.memberId" filterable clearable placeholder="请选择会员">
           <el-option
             v-for="item in memberList"
             :key="item.id"
@@ -33,9 +63,6 @@
       <el-form-item label="缴费状态:" prop="status">
         <el-input v-model="form.status" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="车位:" prop="parkingSpaceId">
-        <el-input v-model="form.parkingSpaceId" style="width: 500px" />
-      </el-form-item>
       <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="onCancel">取消</el-button>
@@ -47,6 +74,10 @@
 <script>
 import { saveBill, getBillById, uploadImage } from '@/api/bill'
 import { listMemberAll } from '@/api/member'
+import { listCommunityByPropertyId } from '@/api/community'
+import { listPropertyAll } from '@/api/property'
+import { listSpaceByCommunityId } from '@/api/space'
+
 export default {
   name: 'BillEdit',
   data() {
@@ -70,6 +101,12 @@ export default {
       },
       // 会员集合
       memberList: [],
+      // 物业集合
+      propertyList: [],
+      // 小区集合
+      communityList: [],
+      // 车位集合
+      spaceList: [],
       // 表单验证规则
       formRules: {
         name: [
@@ -97,10 +134,33 @@ export default {
     }
     // 加载表格数据
     this.getBillById()
+    // 查询全部物业
+    this.listPropertyAll()
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
+    /**
+     * 查询全部物业
+     */
+    listPropertyAll() {
+      listPropertyAll().then((res) => {
+        this.propertyList = res.data
+      })
+    },
+    /**
+     * 根据物业查询小区
+     */
+    listCommunityByPropertyId(propertyId) {
+      listCommunityByPropertyId(propertyId).then((res) => {
+        this.communityList = res.data
+      })
+    },
+    /**
+     * 根据物业查询小区
+     */
+    listSpaceByCommunityId(communityId) {
+      listSpaceByCommunityId(communityId).then((res) => {
+        this.spaceList = res.data
+      })
     },
     /**
      * 上传图片方法

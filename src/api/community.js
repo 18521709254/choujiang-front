@@ -23,6 +23,17 @@ export function listCommunityAll() {
 }
 
 /**
+ * 根据物业查询小区
+ * @param propertyId 物业ID
+ */
+export function listCommunityByPropertyId(propertyId) {
+  return request({
+    url: '/community/listCommunityByPropertyId?propertyId=' + propertyId,
+    method: 'post'
+  })
+}
+
+/**
  * 保存小区
  * @param postData 小区管理数据
  */
