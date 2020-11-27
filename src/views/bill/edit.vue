@@ -60,7 +60,7 @@
       <el-form-item label="车牌号:" prop="carNo">
         <el-input v-model="form.carNo" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="缴费状态:" prop="status">
+      <el-form-item v-if="form.id" label="缴费状态:" prop="status">
         <el-input v-model="form.status" style="width: 500px" />
       </el-form-item>
       <el-form-item style="margin-left: 70%;">

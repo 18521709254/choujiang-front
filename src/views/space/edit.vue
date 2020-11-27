@@ -1,12 +1,6 @@
 <template>
   <div class="app-container">
     <el-form ref="form" :model="form" :rules="formRules" label-width="120px">
-      <el-form-item label="车位名称：" prop="name">
-        <el-input v-model="form.name" style="width: 500px" />
-      </el-form-item>
-      <el-form-item label="车位地址:" prop="address">
-        <el-input v-model="form.address" style="width: 500px" />
-      </el-form-item>
       <el-form-item label="停车单价/每小时:" prop="price">
         <el-input v-model="form.price" style="width: 500px" />
       </el-form-item>
@@ -15,18 +9,6 @@
       </el-form-item>
       <el-form-item label="车位编号:" prop="no">
         <el-input v-model="form.no" style="width: 500px" />
-      </el-form-item>
-      <el-form-item label="车位平面图:" prop="path">
-        <el-upload
-          class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="form.path" :src="form.path" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon" />
-        </el-upload>
       </el-form-item>
       <el-form-item label="所属小区:" prop="communityId">
         <el-select v-model="form.communityId" filterable clearable placeholder="请选择物业">
@@ -77,8 +59,6 @@ export default {
       form: {
         // 车位ID
         id: '',
-        // 车位名称
-        name: '',
         // 停车单价/每小时
         price: '',
         // 车位类型：1-物业、2-私人
@@ -93,19 +73,11 @@ export default {
         status: '',
         // 物业ID
         communityId: '',
-        // 车位平面图路径
-        path: ''
       },
       // 物业集合
       communityList: [],
       // 表单验证规则
       formRules: {
-        name: [
-          { required: true, message: '请输入车位名称', trigger: 'blur' }
-        ],
-        address: [
-          { required: true, message: '请输入车位地址', trigger: 'blur' }
-        ],
         price: [
           { required: true, message: '请输入停车单价', trigger: 'blur' }
         ],
@@ -118,9 +90,6 @@ export default {
         no: [
           { required: true, message: '请输入车位编号', trigger: 'blur' }
         ]
-        // path: [
-        //   { required: true, message: '请上传车位平面图', trigger: 'blur' }
-        // ]
       }
     }
   },

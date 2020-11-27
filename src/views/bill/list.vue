@@ -4,7 +4,7 @@
       <el-button type="primary" @click="addBill">新增</el-button>
       <el-button type="danger" @click="delBill">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
+        <el-input v-model="name" maxlength="50" placeholder="请输入名称进行查询" />
         <el-button type="warning" @click="listBillByPage">查询</el-button>
       </div>
     </div>
@@ -16,7 +16,7 @@
       element-loading-text="Loading"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column align="center" label="序号" width="95">
+      <el-table-column align="center" label="序号" width="50">
         <template slot-scope="scope">
           {{ scope.$index + 1 }}
         </template>
@@ -25,6 +25,36 @@
         type="selection"
         width="55"
       />
+      <el-table-column label="物业名称">
+        <template slot-scope="scope">
+          {{ scope.row.propertyName }}
+        </template>
+      </el-table-column>
+      <el-table-column label="小区名称">
+        <template slot-scope="scope">
+          {{ scope.row.communityName }}
+        </template>
+      </el-table-column>
+      <el-table-column label="停车用户">
+        <template slot-scope="scope">
+          {{ scope.row.memberName }}
+        </template>
+      </el-table-column>
+      <el-table-column label="车牌号">
+        <template slot-scope="scope">
+          {{ scope.row.carNo }}
+        </template>
+      </el-table-column>
+      <el-table-column label="缴费状态">
+        <template slot-scope="scope">
+          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="车位信息">
+        <template slot-scope="scope">
+          {{ scope.row.spaceNo }}
+        </template>
+      </el-table-column>
       <el-table-column label="开始时间">
         <template slot-scope="scope">
           {{ scope.row.startDate }}
@@ -40,26 +70,6 @@
           {{ scope.row.payDate }}
         </template>
       </el-table-column>
-      <el-table-column label="停车用户">
-        <template slot-scope="scope">
-          {{ scope.row.memberName }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车牌号">
-        <template slot-scope="scope">
-          {{ scope.row.carNo }}
-        </template>
-      </el-table-column>
-      <el-table-column label="缴费状态">
-        <template slot-scope="scope">
-          {{ scope.row.status }}
-        </template>
-      </el-table-column>
-      <el-table-column label="车位信息">
-        <template slot-scope="scope">
-          {{ scope.row.spaceInfo }}
-        </template>
-      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button
@@ -67,13 +77,25 @@
             type="primary"
             icon="el-icon-edit"
             @click="handleEdit(scope.$index, scope.row)"
-          ></el-button>
+          />
           <el-button
             size="mini"
             type="danger"
             icon="el-icon-delete"
             @click="handleDelete(scope.$index, scope.row)"
-          ></el-button>
+          />
+          <el-button
+            size="mini"
+            type="success"
+            icon="el-icon-check"
+            @click="handleSuccess(scope.$index, scope.row)"
+          />
+          <el-button
+            size="mini"
+            type="success"
+            icon="el-icon-star-off"
+            @click="handlePay(scope.$index, scope.row)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -92,23 +114,21 @@
 </template>
 
 <script>
-import { listBillByPage, delBillByIds } from '@/api/bill'
+import { listBillByPage, delBillByIds, closeBillByIds, payBillByIds } from '@/api/bill'
 export default {
   name: 'BillList',
   filters: {
     statusFilter(status) {
       const statusMap = {
         0: 'gery',
-        1: 'success',
-        2: 'danger'
+        1: 'success'
       }
       return statusMap[status]
     },
     statusType(status) {
       const statusMap = {
-        0: '正在审核',
-        1: '审核通过',
-        2: '审核失败'
+        0: '未交费',
+        1: '已交费'
       }
       return statusMap[status]
     }
@@ -188,6 +208,24 @@ export default {
       this.delBill()
     },
     /**
+     * 结束订单
+     * @param index 行数
+     * @param row 选中行数据
+     */
+    handleSuccess(index, row) {
+      this.ids = [row.id]
+      this.closeBill()
+    },
+    /**
+     * 订单缴费
+     * @param index 行数
+     * @param row 选中行数据
+     */
+    handlePay(index, row) {
+      this.ids = [row.id]
+      this.payBill()
+    },
+    /**
      * 编辑按钮
      * @param index 行数
      * @param row 选中行数据
@@ -201,6 +239,26 @@ export default {
     delBill() {
       const ids = this.ids
       delBillByIds(ids).then((res) => {
+        this.$message.success(res.message)
+        this.listBillByPage()
+      })
+    },
+    /**
+     * 根据订单ID结束订单
+     */
+    closeBill() {
+      const ids = this.ids
+      closeBillByIds(ids).then((res) => {
+        this.$message.success(res.message)
+        this.listBillByPage()
+      })
+    },
+    /**
+     * 根据订单ID缴费
+     */
+    payBill() {
+      const ids = this.ids
+      payBillByIds(ids).then((res) => {
         this.$message.success(res.message)
         this.listBillByPage()
       })
