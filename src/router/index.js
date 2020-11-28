@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { state } from '@/store/modules/user'
 
 Vue.use(Router)
 
@@ -52,7 +51,10 @@ export const constantRoutes = [
       path: 'dashboard',
       name: '首页',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: '首页' }
+      meta: {
+        roles: ['管理员'],
+        title: '首页', icon: '首页'
+      }
     }]
   },
   /** **************** 宋凯翔新增页面 *********************/
@@ -67,136 +69,9 @@ export const constantRoutes = [
         path: 'propertyList',
         name: '物业管理',
         component: () => import('@/views/property/list'),
-        meta: { title: '物业管理', icon: 'table' }
-      },
-      {
-        path: 'propertyEdit',
-        name: 'PropertyEdit',
-        hidden: true,
-        component: () => import('@/views/property/edit'),
-        meta: { title: 'PropertyEdit', icon: 'tree' }
-      },
-      {
-        path: 'communityList',
-        name: '小区管理',
-        component: () => import('@/views/community/list'),
-        meta: { title: '小区管理', icon: 'table' }
-      },
-      {
-        path: 'communityEdit',
-        name: 'CommunityEdit',
-        hidden: true,
-        component: () => import('@/views/community/edit'),
-        meta: { title: 'CommunityEdit', icon: 'tree' }
-      },
-      {
-        path: 'userList',
-        name: '用户管理',
-        component: () => import('@/views/user/list'),
-        meta: { title: '用户管理', icon: 'table' }
-      },
-      {
-        path: 'userEdit',
-        name: 'UserEdit',
-        hidden: true,
-        component: () => import('@/views/user/edit'),
-        meta: { title: 'UserEdit', icon: 'tree' }
-      },
-      {
-        path: 'roleList',
-        name: '角色管理',
-        component: () => import('@/views/role/list'),
-        meta: { title: '角色管理', icon: 'table' }
-      },
-      {
-        path: 'roleEdit',
-        name: 'RoleEdit',
-        hidden: true,
-        component: () => import('@/views/role/edit'),
-        meta: { title: 'RoleEdit', icon: 'tree' }
-      }, {
-        path: 'billList',
-        name: '订单管理',
-        component: () => import('@/views/bill/list'),
-        meta: { title: '订单管理', icon: 'table' }
-      },
-      {
-        path: 'billEdit',
-        name: 'BillEdit',
-        hidden: true,
-        component: () => import('@/views/bill/edit'),
-        meta: { title: 'RoleEdit', icon: 'tree' }
-      },
-      {
-        path: 'memberList',
-        name: '会员管理',
-        component: () => import('@/views/member/list'),
-        meta: { title: '会员管理', icon: 'table' }
-      },
-      {
-        path: 'memberEdit',
-        name: 'MemberEdit',
-        hidden: true,
-        component: () => import('@/views/member/edit'),
-        meta: { title: 'MemberEdit', icon: 'tree' }
-      },
-      {
-        path: 'spaceList',
-        name: '车位管理',
-        component: () => import('@/views/space/list'),
-        meta: { title: '车位管理', icon: 'table' }
-      },
-      {
-        path: 'spaceEdit',
-        name: 'SpaceEdit',
-        hidden: true,
-        component: () => import('@/views/space/edit'),
-        meta: { title: 'SpaceEdit', icon: 'tree' }
-      }
-    ]
-  },
-
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
-
-export const adminRoutes = [
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
-
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
-
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: '首页',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: '首页' }
-    }]
-  },
-  /** **************** 宋凯翔新增页面 *********************/
-  {
-    path: '/property',
-    component: Layout,
-    redirect: '/property/list',
-    name: 'Property',
-    meta: { title: '系统管理员', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'propertyList',
-        name: '物业管理',
-        component: () => import('@/views/property/list'),
-        meta: { title: '物业管理', icon: 'table' }
+        meta: {
+          roles: ['管理员'],
+          title: '物业管理', icon: 'table' }
       },
       {
         path: 'propertyEdit',
@@ -293,7 +168,7 @@ const createRouter = () => new Router({
   mode: 'hash',
   base: process.env.BASE_URL,
   scrollBehavior: () => ({ y: 0 }),
-  routes: adminRoutes
+  routes: constantRoutes
 })
 
 const router = createRouter()
