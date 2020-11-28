@@ -113,7 +113,7 @@ service.interceptors.request.use(
   config => {
     if (config && store.getters.token) {
       // 让每个请求携带自定义token 请根据实际情况自行修改
-      config.headers['Fmds-Access-Token'] = store.getters.token
+      config.headers['Token'] = store.getters.token
     }
     return config
   },

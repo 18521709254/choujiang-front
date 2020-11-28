@@ -13,7 +13,7 @@ export const login = param => request({
  */
 export const logout = () => {
   return request({
-    url: '/logout',
-    method: 'get'
+    url: '/user/logout',
+    method: 'post'
   })
 }
