@@ -156,6 +156,19 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/space/edit'),
         meta: { title: 'SpaceEdit', icon: 'tree' }
+      },
+      {
+        path: 'placardList',
+        name: '公告管理',
+        component: () => import('@/views/placard/list'),
+        meta: { title: '公告管理', icon: 'table' }
+      },
+      {
+        path: 'PlacardEdit',
+        name: 'PlacardEdit',
+        hidden: true,
+        component: () => import('@/views/placard/edit'),
+        meta: { title: 'placardEdit', icon: 'tree' }
       }
     ]
   },
