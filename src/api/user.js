@@ -47,6 +47,18 @@ export function saveUser(postData) {
 }
 
 /**
+ * 用户注册
+ * @param postData 用户管理数据
+ */
+export function register(postData) {
+  return request({
+    url: '/user/register',
+    method: 'post',
+    data: postData
+  })
+}
+
+/**
  * 根据ID查询用户
  * @param userId 用户ID
  */

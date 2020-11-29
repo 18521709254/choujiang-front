@@ -49,8 +49,8 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          placeholder="账号"
+          name="账号"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -66,8 +66,8 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
-          name="password"
+          placeholder="密码"
+          name="密码"
           tabindex="2"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
@@ -76,25 +76,29 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-      <el-form-item prop="property" class="select-box">
+      <el-form-item prop="username">
         <span class="svg-container">
-          <i class="el-icon-s-flag"></i>
+          <svg-icon icon-class="user" />
         </span>
-        <el-select v-model="loginForm.property" placeholder="请选择物业">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        <el-input
+          ref="username"
+          v-model="loginForm.propertyName"
+          placeholder="物业名称"
+          name="物业名称"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
       </el-form-item>
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">注册</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册</el-button>
+      <span class="registered" @click="registered = false">已有账号，点击登录</span>
     </el-form>
   </div>
 </template>
 
 <script>
+import { register } from '@/api/user'
+
 export default {
   name: 'Login',
   data() {
@@ -102,25 +106,18 @@ export default {
       loginForm: {
         username: '',
         password: '',
-        property: ''
+        propertyName: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
         password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
-        property: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+        propertyName: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       },
       loading: false,
       passwordType: 'password',
       redirect: undefined,
       // 是否打开注册内容
-      registered:false,
-      options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }],
+      registered: false
     }
   },
   watch: {
@@ -148,6 +145,28 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    handleRegister() {
+      const { loginForm } = this
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          const postData = {
+            account: loginForm.username,
+            password: loginForm.password,
+            propertyName: loginForm.propertyName
+          }
+          register(postData).then((res) => {
+            this.$message.info(res)
             this.loading = false
           }).catch(() => {
             this.loading = false
