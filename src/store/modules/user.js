@@ -28,7 +28,7 @@ const mutations = {
   },
   SET_USER: (state, data) => {
     state.userInfo = data
-  }
+  },
 }
 
 const actions = {
