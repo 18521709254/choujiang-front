@@ -13,10 +13,10 @@
       <el-form-item label="联系方式:" prop="tel">
         <el-input v-model="form.tel" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="角色:" prop="roleId">
-        <el-select v-model="form.roleId" filterable clearable placeholder="请选择角色">
+      <el-form-item label="所属物业:" prop="propertyId">
+        <el-select v-model="form.propertyId" filterable clearable placeholder="请选择物业">
           <el-option
-            v-for="item in roleList"
+            v-for="item in propertyList"
             :key="item.id"
             :label="item.name"
             :value="item.id"
@@ -34,6 +34,7 @@
 <script>
 import { saveUser, getUserById } from '@/api/user'
 import { listRoleAll } from '@/api/role'
+import { listPropertyAll } from '@/api/property'
 
 export default {
   name: 'UserEdit',
@@ -53,9 +54,13 @@ export default {
         roleId: '',
         // 联系方式
         tel: '',
+        // 物业ID
+        propertyId: ''
       },
       // 角色管理
       roleList: [],
+      // 物业集合
+      propertyList: [],
       // 表单验证规则
       formRules: {
         name: [
@@ -83,14 +88,24 @@ export default {
     this.getUserById()
     // 查询全部角色
     this.listRoleAll()
+    // 查询全部物业
+    this.listPropertyAll()
   },
   methods: {
     /**
-     * 插叙全部橘色
+     * 查询全部橘色
      */
     listRoleAll() {
       listRoleAll().then((res) => {
         this.roleList = res.data
+      })
+    },
+    /**
+     * 查询全部橘色
+     */
+    listPropertyAll() {
+      listPropertyAll().then((res) => {
+        this.propertyList = res.data
       })
     },
     /**
