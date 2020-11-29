@@ -1,11 +1,9 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
-      <div class="title-container">
-        <h3 class="title">小区车位共享租赁系统</h3>
-      </div>
-
+    <div class="title-container">
+      <h3 class="title">小区车位共享租赁系统</h3>
+    </div>
+    <el-form v-if="!registered" ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -41,6 +39,57 @@
         </span>
       </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登陆</el-button>
+      <span class="registered" @click="registered = true">暂无账号，请点击此处注册！</span>
+    </el-form>
+    <el-form v-if="registered" ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+      <el-form-item prop="username">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="Username"
+          name="username"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+
+      <el-form-item prop="password">
+        <span class="svg-container">
+          <svg-icon icon-class="password" />
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+          placeholder="Password"
+          name="password"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        </span>
+      </el-form-item>
+      <el-form-item prop="property" class="select-box">
+        <span class="svg-container">
+          <i class="el-icon-s-flag"></i>
+        </span>
+        <el-select v-model="loginForm.property" placeholder="请选择物业">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">注册</el-button>
     </el-form>
   </div>
 </template>
@@ -52,15 +101,26 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        property: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
-        password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
+        password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
+        property: [{ required: true, trigger: 'blur', message: '请输入密码' }],
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      // 是否打开注册内容
+      registered:false,
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }],
     }
   },
   watch: {
@@ -146,10 +206,30 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+  .el-select{
+    flex: 1;
+  }
+  .el-select>.el-input{
+    width: 100% !important;
+  }
+  .select-box{
+    .el-form-item__content{
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+    }
+  }
+  .registered{
+    font-size: 14px;
+    color: #ffffff;
+    margin: 10px 0;
+    cursor: pointer;
+  }
 }
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss" rel="stylesheet/scss" scoped>
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
