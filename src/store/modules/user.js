@@ -60,7 +60,9 @@ const actions = {
         commit('SET_AVATAR', avatar)
         commit('SET_USER', data)
         setUserInfo(data)
-        resolve(data)
+        let list = data.routerList
+        localStorage.setItem('menuArr',JSON.stringify(list))
+    resolve(data)
       }).catch(error => {
         reject(error)
       })

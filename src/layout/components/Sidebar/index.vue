@@ -12,7 +12,12 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item
+          v-for="(route, index) in menuArr"
+          :key="index"
+          :item="route"
+          :base-path="route.url"
+        />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -26,6 +31,12 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      // 菜单列表
+      menuArr: JSON.parse(localStorage.getItem('menuArr'))
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar'
