@@ -37,12 +37,6 @@
       <el-form-item v-if="form.id" label="回复内容:" prop="replyContent">
         <el-input v-model="form.replyContent" style="width: 500px" />
       </el-form-item>
-      <el-form-item v-if="form.id" label="审核状态:">
-        <el-radio-group v-model="form.status">
-          <el-radio-button label="0">未处理</el-radio-button>
-          <el-radio-button label="1">已处理</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
       <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>
         <el-button @click="onCancel">取消</el-button>
