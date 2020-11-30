@@ -169,6 +169,19 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/placard/edit'),
         meta: { title: 'placardEdit', icon: 'tree' }
+      },
+      {
+        path: 'ComplaintList',
+        name: '投诉管理',
+        component: () => import('@/views/complaint/list'),
+        meta: { title: '投诉管理', icon: 'table' }
+      },
+      {
+        path: 'ComplaintEdit',
+        name: 'ComplaintEdit',
+        hidden: true,
+        component: () => import('@/views/complaint/edit'),
+        meta: { title: 'complainEdit', icon: 'tree' }
       }
     ]
   },
