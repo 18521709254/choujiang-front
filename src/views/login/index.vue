@@ -76,6 +76,34 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
+      <el-form-item prop="name">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="name"
+          v-model="loginForm.name"
+          placeholder="用户名称"
+          name="用户名称"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="tel">
+        <span class="svg-container">
+          <svg-icon icon-class="user" />
+        </span>
+        <el-input
+          ref="tel"
+          v-model="loginForm.tel"
+          placeholder="联系方式"
+          name="联系方式"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -106,12 +134,14 @@ export default {
       loginForm: {
         username: '',
         password: '',
+        name: '',
+        tel: '',
         propertyName: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
         password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
-        propertyName: [{ required: true, trigger: 'blur', message: '请输入密码' }]
+        propertyName: [{ required: true, trigger: 'blur', message: '请输入物业名称' }]
       },
       loading: false,
       passwordType: 'password',
@@ -142,10 +172,8 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
           }).catch(() => {
             this.loading = false
           })
@@ -162,6 +190,8 @@ export default {
           this.loading = true
           const postData = {
             account: loginForm.username,
+            name: loginForm.name,
+            tel: loginForm.tel,
             password: loginForm.password,
             propertyName: loginForm.propertyName
           }

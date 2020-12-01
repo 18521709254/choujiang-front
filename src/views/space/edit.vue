@@ -34,7 +34,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="form.id" label="审核状态:">
-        <el-radio-group v-model="form.status">
+        <el-radio-group v-model="form.checkStatus">
           <el-radio-button label="0">正在审核</el-radio-button>
           <el-radio-button label="1">审核通过</el-radio-button>
           <el-radio-button label="2">审核失败</el-radio-button>
@@ -70,9 +70,9 @@ export default {
         // 车位编号
         no: '',
         // 审核状态
-        status: '',
+        checkStatus: '',
         // 物业ID
-        communityId: '',
+        communityId: ''
       },
       // 物业集合
       communityList: [],
@@ -105,26 +105,6 @@ export default {
     this.getSpaceById()
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    /**
-     * 上传图片方法
-     */
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
-      }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      uploadImage(file).then((res) => {
-        console.log('测试上传')
-      })
-      return isJPG && isLt2M
-    },
     /**
      * 数据保存
      */
@@ -174,28 +154,5 @@ export default {
 </script>
 
 <style scoped>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409EFF;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
 </style>
 

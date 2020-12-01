@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken,setUserInfo } from '@/utils/auth'
+import { getToken, setToken, removeToken, setUserInfo } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { Message } from 'element-ui'
 
 const getDefaultState = () => {
   return {
@@ -28,7 +29,7 @@ const mutations = {
   },
   SET_USER: (state, data) => {
     state.userInfo = data
-  },
+  }
 }
 
 const actions = {
@@ -36,12 +37,16 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ account: username.trim(), password: password }).then(response => {
+      login({ account: username.trim(), password: password }).then((response) => {
+        if (response.message !== '登陆成功') {
+          Message.warning(response.message)
+          return
+        }
         const { data } = response
         commit('SET_TOKEN', data)
         setToken(data)
         resolve()
-      }).catch(error => {
+      }).catch((error) => {
         reject(error)
       })
     })
@@ -60,9 +65,9 @@ const actions = {
         commit('SET_AVATAR', avatar)
         commit('SET_USER', data)
         setUserInfo(data)
-        let list = data.routerList
-        localStorage.setItem('menuArr',JSON.stringify(list))
-    resolve(data)
+        const list = data.routerList
+        localStorage.setItem('menuArr', JSON.stringify(list))
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
