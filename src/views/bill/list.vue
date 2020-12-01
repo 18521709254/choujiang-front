@@ -18,31 +18,42 @@
     >
       <el-table-column align="center" label="序号" width="50">
         <template slot-scope="scope">
-          {{ scope.$index + 1 }}
+          <div>
+            {{ scope.$index + 1 }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column
         type="selection"
-        width="55"
+        align="center"
+        width="50"
       />
       <el-table-column label="物业名称">
         <template slot-scope="scope">
-          {{ scope.row.propertyName }}
+          <div>
+            {{ scope.row.propertyName }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="小区名称">
         <template slot-scope="scope">
-          {{ scope.row.communityName }}
+          <div>
+            {{ scope.row.communityName }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="停车用户">
         <template slot-scope="scope">
-          {{ scope.row.memberName }}
+          <div>
+            {{ scope.row.memberName }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="车牌号">
         <template slot-scope="scope">
-          {{ scope.row.carNo }}
+          <div>
+            {{ scope.row.carNo }}
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="缴费状态">
@@ -52,50 +63,79 @@
       </el-table-column>
       <el-table-column label="车位信息">
         <template slot-scope="scope">
-          {{ scope.row.spaceNo }}
+          <div>
+            {{ scope.row.spaceNo }}
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="开始时间">
+      <el-table-column label="开始时间" align="center">
         <template slot-scope="scope">
-          {{ scope.row.startDate }}
+          <div>
+            <p style="margin: 0px;text-align: center;">
+              {{ scope.row.startDate && scope.row.startDate.substring(11,19) }}
+            </p>
+            <p style="margin: 0px;text-align: center;">
+              {{ scope.row.startDate && scope.row.startDate.substring(0,10) }}
+            </p>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="结束时间">
+      <el-table-column label="结束时间" align="center">
         <template slot-scope="scope">
-          {{ scope.row.endDate }}
+          <div>
+            <p style="margin: 0px;text-align: center;">
+              {{ scope.row.endDate && scope.row.endDate.substring(11,19) }}
+            </p>
+            <p style="margin: 0px;text-align: center;">
+              {{ scope.row.endDate && scope.row.endDate.substring(0,10) }}
+            </p>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="缴费时间">
+      <el-table-column label="缴费时间" align="center">
         <template slot-scope="scope">
-          {{ scope.row.payDate }}
+          <div>
+            <p style="margin: 0px;text-align: center;">
+              {{ scope.row.payDate && scope.row.payDate.substring(11,19) }}
+            </p>
+            <p style="margin: 0px;text-align: center;">
+              {{ scope.row.payDate && scope.row.payDate.substring(0,10) }}
+            </p>
+          </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            icon="el-icon-edit"
-            @click="handleEdit(scope.$index, scope.row)"
-          />
-          <el-button
-            size="mini"
-            type="danger"
-            icon="el-icon-delete"
-            @click="handleDelete(scope.$index, scope.row)"
-          />
-          <el-button
-            size="mini"
-            type="success"
-            icon="el-icon-check"
-            @click="handleSuccess(scope.$index, scope.row)"
-          />
-          <el-button
-            size="mini"
-            type="success"
-            icon="el-icon-star-off"
-            @click="handlePay(scope.$index, scope.row)"
-          />
+          <div>
+            <div style="display: flex;margin-bottom: 10px;">
+              <el-button
+                size="mini"
+                type="primary"
+                icon="el-icon-edit"
+                @click="handleEdit(scope.$index, scope.row)"
+              />
+              <el-button
+                size="mini"
+                type="danger"
+                icon="el-icon-delete"
+                @click="handleDelete(scope.$index, scope.row)"
+              />
+            </div>
+            <div style="display: flex">
+              <el-button
+                size="mini"
+                type="success"
+                icon="el-icon-check"
+                @click="handleSuccess(scope.$index, scope.row)"
+              />
+              <el-button
+                size="mini"
+                type="success"
+                icon="el-icon-star-off"
+                @click="handlePay(scope.$index, scope.row)"
+              />
+            </div>
+          </div>
         </template>
       </el-table-column>
     </el-table>

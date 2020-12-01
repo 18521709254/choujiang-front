@@ -45,7 +45,7 @@
           <el-tag :type="scope.row.sex | statusFilter">{{ scope.row.sex | statusType }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
           <el-button
             size="mini"
