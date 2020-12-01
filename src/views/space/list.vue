@@ -4,7 +4,7 @@
       <el-button type="primary" @click="addSpace">新增</el-button>
       <el-button type="danger" @click="delSpace">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
+        <el-input maxlength="50" v-model="no" placeholder="请输入车位编号进行查询" />
         <el-button type="warning" @click="listSpaceByPage">查询</el-button>
       </div>
     </div>
@@ -142,7 +142,7 @@ export default {
       // 总数量
       total: 100,
       // 名称查询
-      name: '',
+      no: '',
       // 被选中的ID集合
       ids: []
     }
@@ -156,8 +156,8 @@ export default {
      */
     listSpaceByPage() {
       this.listLoading = true
-      const { pageInfo, name } = this
-      const postData = { pageInfo: pageInfo, name: name }
+      const { pageInfo, no } = this
+      const postData = { pageInfo: pageInfo, no: no }
       listSpaceByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false

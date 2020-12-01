@@ -4,7 +4,7 @@
       <el-button type="primary" @click="addPlacard">新增</el-button>
       <el-button type="danger" @click="delPlacard">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="title" placeholder="请输入名称进行查询" />
+        <el-input maxlength="50" v-model="title" placeholder="请输入标题进行查询" />
         <el-button type="warning" @click="listPlacardByPage">查询</el-button>
       </div>
     </div>
@@ -95,8 +95,8 @@ export default {
      */
     listPlacardByPage() {
       this.listLoading = true
-      const { pageInfo, name } = this
-      const postData = { pageInfo: pageInfo, name: name }
+      const { pageInfo, title } = this
+      const postData = { pageInfo: pageInfo, title: title }
       listPlacardByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false

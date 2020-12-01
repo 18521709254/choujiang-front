@@ -4,7 +4,7 @@
       <el-button type="primary" @click="addComplaint">新增</el-button>
       <el-button type="danger" @click="delComplaint">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
+        <el-input maxlength="50" v-model="content" placeholder="请输入投诉内容进行查询" />
         <el-button type="warning" @click="listComplaintByPage">查询</el-button>
       </div>
     </div>
@@ -38,6 +38,11 @@
       <el-table-column label="投诉小区">
         <template slot-scope="scope">
           {{ scope.row.communityName }}
+        </template>
+      </el-table-column>
+      <el-table-column label="投诉内容">
+        <template slot-scope="scope">
+          {{ scope.row.content }}
         </template>
       </el-table-column>
       <el-table-column class-name="status-col" label="投诉状态" width="110" align="center">
@@ -111,7 +116,7 @@ export default {
       // 总数量
       total: 100,
       // 名称查询
-      name: '',
+      content: '',
       // 被选中的ID集合
       ids: []
     }
@@ -125,8 +130,8 @@ export default {
      */
     listComplaintByPage() {
       this.listLoading = true
-      const { pageInfo, name } = this
-      const postData = { pageInfo: pageInfo, name: name }
+      const { pageInfo, content } = this
+      const postData = { pageInfo: pageInfo, content: content }
       listComplaintByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false

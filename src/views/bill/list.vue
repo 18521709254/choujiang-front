@@ -4,7 +4,7 @@
       <el-button type="primary" @click="addBill">新增</el-button>
       <el-button type="danger" @click="delBill">删除</el-button>
       <div class="search-box">
-        <el-input v-model="name" maxlength="50" placeholder="请输入名称进行查询" />
+        <el-input v-model="carNo" maxlength="50" placeholder="请输入车牌号进行查询" />
         <el-button type="warning" @click="listBillByPage">查询</el-button>
       </div>
     </div>
@@ -147,7 +147,7 @@ export default {
       // 总数量
       total: 100,
       // 名称查询
-      name: '',
+      carNo: '',
       // 被选中的ID集合
       ids: []
     }
@@ -161,8 +161,8 @@ export default {
      */
     listBillByPage() {
       this.listLoading = true
-      const { pageInfo, name } = this
-      const postData = { pageInfo: pageInfo, name: name }
+      const { pageInfo, carNo } = this
+      const postData = { pageInfo: pageInfo, carNo: carNo }
       listBillByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
