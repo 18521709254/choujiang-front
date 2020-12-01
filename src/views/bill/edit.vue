@@ -189,6 +189,11 @@ export default {
         }
         // 调用保存方法
         saveBill(form).then((res) => {
+          const { message } = res
+          if (message !== '订单保存成功') {
+            this.$message.warning(message)
+            return
+          }
           this.$message.success(res.message)
           // 返回上一级页面
           this.onCancel()
