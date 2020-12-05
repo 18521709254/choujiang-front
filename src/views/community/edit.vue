@@ -58,7 +58,7 @@ export default {
         // 小区名称
         name: '',
         // 审核状态
-        status: '',
+        status: 0,
         // 物业ID
         propertyId: '',
         // 地址

@@ -9,7 +9,6 @@
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
           v-model="loginForm.username"
           placeholder="Username"
           name="username"
@@ -18,14 +17,12 @@
           auto-complete="on"
         />
       </el-form-item>
-
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
         </span>
         <el-input
           :key="passwordType"
-          ref="password"
           v-model="loginForm.password"
           :type="passwordType"
           placeholder="Password"
@@ -47,8 +44,7 @@
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
+          v-model="loginForm.account"
           placeholder="账号"
           name="账号"
           type="text"
@@ -63,7 +59,6 @@
         </span>
         <el-input
           :key="passwordType"
-          ref="password"
           v-model="loginForm.password"
           :type="passwordType"
           placeholder="密码"
@@ -77,11 +72,7 @@
         </span>
       </el-form-item>
       <el-form-item prop="name">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
         <el-input
-          ref="name"
           v-model="loginForm.name"
           placeholder="用户名称"
           name="用户名称"
@@ -91,11 +82,7 @@
         />
       </el-form-item>
       <el-form-item prop="tel">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
         <el-input
-          ref="tel"
           v-model="loginForm.tel"
           placeholder="联系方式"
           name="联系方式"
@@ -105,14 +92,81 @@
         />
       </el-form-item>
       <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
         <el-input
           ref="username"
-          v-model="loginForm.propertyName"
+          v-model="propertyForm.name"
           placeholder="物业名称"
           name="物业名称"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="legalPerson">
+        <el-input
+          ref="username"
+          v-model="propertyForm.legalPerson"
+          placeholder="法人代表"
+          name="法人代表"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="level">
+        <el-select v-model="propertyForm.level" placeholder="请选择资质等级">
+          <el-option
+            v-for="item in levelList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="tel">
+        <el-input
+          v-model="propertyForm.tel"
+          placeholder="物业电话"
+          name="物业电话"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="cardNo">
+        <el-input
+          ref="username"
+          v-model="propertyForm.cardNo"
+          placeholder="资质证书号"
+          name="资质证书号"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="grantTime">
+        <el-date-picker
+          v-model="propertyForm.grantTime"
+          type="date"
+          placeholder="选择日期"
+        />
+      </el-form-item>
+      <el-form-item prop="contactName">
+        <el-input
+          v-model="propertyForm.contactName"
+          placeholder="联系人"
+          name="联系人"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
+      </el-form-item>
+      <el-form-item prop="area">
+        <el-input
+          ref="username"
+          v-model="propertyForm.area"
+          placeholder="托管面积"
+          name="托管面积"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -131,12 +185,33 @@ export default {
   name: 'Login',
   data() {
     return {
+      levelList: [{
+        value: '一级',
+        label: '一级'
+      }, {
+        value: '二级',
+        label: '二级'
+      }, {
+        value: '三级',
+        label: '三级'
+      }],
+      // 登陆信息
       loginForm: {
-        username: '',
-        password: '',
-        name: '',
+        account: '',
         tel: '',
-        propertyName: ''
+        password: ''
+      },
+      // 物业信息
+      propertyForm: {
+        name: '',
+        legalPerson: '',
+        grantTime: '',
+        level: '',
+        cardNo: '',
+        contactName: '',
+        tel: '',
+        area: '',
+        status: 0
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
@@ -184,16 +259,13 @@ export default {
       })
     },
     handleRegister() {
-      const { loginForm } = this
+      const { loginForm, propertyForm } = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          this.loading = true
+          // this.loading = true
           const postData = {
-            account: loginForm.username,
-            name: loginForm.name,
-            tel: loginForm.tel,
-            password: loginForm.password,
-            propertyName: loginForm.propertyName
+            user: loginForm,
+            property: propertyForm
           }
           register(postData).then((res) => {
             this.$message.info(res)

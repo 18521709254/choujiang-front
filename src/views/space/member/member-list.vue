@@ -143,6 +143,8 @@ export default {
       total: 100,
       // 名称查询
       no: '',
+      // 默认查询私人
+      type: 2,
       // 被选中的ID集合
       ids: []
     }
@@ -156,8 +158,8 @@ export default {
      */
     listMemberSpaceByPage() {
       this.listLoading = true
-      const { pageInfo, no } = this
-      const postData = { pageInfo: pageInfo, no: no }
+      const { pageInfo, no, type } = this
+      const postData = { pageInfo: pageInfo, no: no, type: type }
       listMemberSpaceByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false

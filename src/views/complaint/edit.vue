@@ -67,7 +67,7 @@ export default {
         // 内容
         content: '',
         // 审核状态
-        status: '',
+        status: 0,
         // 回复内容
         replyContent: ''
       },

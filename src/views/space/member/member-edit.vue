@@ -22,7 +22,6 @@
       </el-form-item>
       <el-form-item label="车位类型:">
         <el-radio-group v-model="form.type">
-          <el-radio-button label="1">物业</el-radio-button>
           <el-radio-button label="2">私人</el-radio-button>
         </el-radio-group>
       </el-form-item>
@@ -49,7 +48,7 @@
 </template>
 
 <script>
-import { saveMemberSpace, getMemberSpaceById } from '@/api/memberSpace'
+import { saveSpace, getSpaceById } from '@/api/space'
 import { listCommunityAll } from '@/api/community'
 export default {
   name: 'MemberSpaceEdit',
@@ -62,15 +61,15 @@ export default {
         // 停车单价/每小时
         price: '',
         // 车位类型：1-物业、2-私人
-        type: '',
+        type: 2,
         // 车位使用状态：0-暂停租用、1-空闲、2-使用中
-        useStatus: '',
+        useStatus: 0,
         // 费用占比
         percent: '',
         // 车位编号
         no: '',
         // 审核状态
-        checkStatus: '',
+        checkStatus: 0,
         // 物业ID
         communityId: ''
       },
@@ -102,7 +101,7 @@ export default {
       this.form.id = spaceId
     }
     // 加载表格数据
-    this.getMemberSpaceById()
+    this.getSpaceById()
   },
   methods: {
     /**
@@ -115,7 +114,7 @@ export default {
           return
         }
         // 调用保存方法
-        saveMemberSpace(form).then((res) => {
+        saveSpace(form).then((res) => {
           this.$message.success(res.message)
           // 返回上一级页面
           this.onCancel()
@@ -139,12 +138,12 @@ export default {
     /**
      * 根据ID查询车位信息
      */
-    getMemberSpaceById() {
+    getSpaceById() {
       const formId = this.form.id
       if (!formId) {
         return
       }
-      getMemberSpaceById(formId).then((res) => {
+      getSpaceById(formId).then((res) => {
         const data = res.data
         Object.assign(this.form, data)
       })

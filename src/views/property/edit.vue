@@ -4,6 +4,27 @@
       <el-form-item label="物业名称:" prop="name">
         <el-input v-model="form.name" style="width: 500px" />
       </el-form-item>
+      <el-form-item label="法人代表:" prop="legalPerson">
+        <el-input v-model="form.legalPerson" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="资质等级:" prop="level">
+        <el-input v-model="form.level" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="资质证书号:" prop="cardNo">
+        <el-input v-model="form.cardNo" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="准予时间:" prop="grantTime">
+        <el-input v-model="form.grantTime" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="联系人:" prop="contactName">
+        <el-input v-model="form.contactName" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="电话:" prop="tel">
+        <el-input v-model="form.tel" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="托管面积:" prop="area">
+        <el-input v-model="form.area" style="width: 500px" />
+      </el-form-item>
       <el-form-item label="审核状态:" v-if="form.id">
         <el-radio-group  v-model="form.status">
           <el-radio-button label="0">正在审核</el-radio-button>
@@ -29,10 +50,14 @@ export default {
       form: {
         // 物业ID
         id: '',
-        // 物业名称
-        name: '',
-        // 审核状态
-        status: ''
+        legalPerson: '',
+        grantTime: '',
+        level: '',
+        cardNo: '',
+        contactName: '',
+        tel: '',
+        area: '',
+        status: 0
       },
       // 表单验证规则
       formRules: {

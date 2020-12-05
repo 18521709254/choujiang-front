@@ -23,7 +23,6 @@
       <el-form-item label="车位类型:">
         <el-radio-group v-model="form.type">
           <el-radio-button label="1">物业</el-radio-button>
-          <el-radio-button label="2">私人</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-if="form.id" label="车位使用状态:">
@@ -31,13 +30,6 @@
           <el-radio-button label="0">暂停使用</el-radio-button>
           <el-radio-button label="1">空闲</el-radio-button>
           <el-radio-button label="2">使用中</el-radio-button>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item v-if="form.id" label="审核状态:">
-        <el-radio-group v-model="form.checkStatus">
-          <el-radio-button label="0">正在审核</el-radio-button>
-          <el-radio-button label="1">审核通过</el-radio-button>
-          <el-radio-button label="2">审核失败</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item style="margin-left: 70%;">
@@ -52,7 +44,7 @@
 import { saveSpace, getSpaceById } from '@/api/space'
 import { listCommunityAll } from '@/api/community'
 export default {
-  name: 'SpaceEdit',
+  name: 'PropertySpaceEdit',
   data() {
     return {
       // 表单数据
@@ -62,15 +54,15 @@ export default {
         // 停车单价/每小时
         price: '',
         // 车位类型：1-物业、2-私人
-        type: '',
+        type: 1,
         // 车位使用状态：0-暂停租用、1-空闲、2-使用中
-        useStatus: '',
+        useStatus: 0,
         // 费用占比
         percent: '',
         // 车位编号
         no: '',
         // 审核状态
-        checkStatus: '',
+        checkStatus: 1,
         // 物业ID
         communityId: ''
       },
