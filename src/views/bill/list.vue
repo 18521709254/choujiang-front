@@ -1,7 +1,6 @@
 <template>
   <div class="app-container">
     <div class="head">
-      <el-button type="primary" @click="addBill">新增</el-button>
       <el-button type="danger" @click="delBill">删除</el-button>
       <div class="search-box">
         <el-input v-model="carNo" maxlength="50" placeholder="请输入车牌号进行查询" />
@@ -211,12 +210,6 @@ export default {
       })
     },
     /**
-     * 新增页面组件
-     */
-    addBill() {
-      this.$router.push({ name: 'BillEdit' })
-    },
-    /**
      * 多选框change事件
      */
     handleSelectionChange(value) {
@@ -272,16 +265,6 @@ export default {
      */
     handleEdit(index, row) {
       this.$router.push({ name: 'BillEdit', query: { billId: row.id }})
-    },
-    /**
-     * 根据订单ID集合删除订单信息
-     */
-    delBill() {
-      const ids = this.ids
-      delBillByIds(ids).then((res) => {
-        this.$message.success(res.message)
-        this.listBillByPage()
-      })
     },
     /**
      * 根据订单ID结束订单

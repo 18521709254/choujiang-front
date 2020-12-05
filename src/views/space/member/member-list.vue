@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="head">
-      <el-button type="primary" @click="addSpace">新增</el-button>
-      <el-button type="danger" @click="delSpace">删除</el-button>
+      <el-button type="primary" @click="addMemberSpace">新增</el-button>
+      <el-button type="danger" @click="delMemberSpace">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="no" placeholder="请输入车位编号进行查询" />
-        <el-button type="warning" @click="listSpaceByPage">查询</el-button>
+        <el-input v-model="no" maxlength="50" placeholder="请输入车位编号进行查询" />
+        <el-button type="warning" @click="listMemberSpaceByPage">查询</el-button>
       </div>
     </div>
     <el-table
@@ -32,7 +32,7 @@
       </el-table-column>
       <el-table-column label="车位编号">
         <template slot-scope="scope">
-            {{ scope.row.no }}
+          {{ scope.row.no }}
         </template>
       </el-table-column>
       <el-table-column label="费用占比">
@@ -67,13 +67,13 @@
             type="primary"
             icon="el-icon-edit"
             @click="handleEdit(scope.$index, scope.row)"
-          ></el-button>
+          />
           <el-button
             size="mini"
             type="danger"
             icon="el-icon-delete"
             @click="handleDelete(scope.$index, scope.row)"
-          ></el-button>
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -92,9 +92,9 @@
 </template>
 
 <script>
-import { listSpaceByPage, delSpaceByIds } from '@/api/space'
+import { listMemberSpaceByPage, delMemberSpaceByIds } from '@/api/memberSpace'
 export default {
-  name: 'SpaceList',
+  name: 'MemberSpaceList',
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -148,17 +148,17 @@ export default {
     }
   },
   created() {
-    this.listSpaceByPage()
+    this.listMemberSpaceByPage()
   },
   methods: {
     /**
      * 数据查询
      */
-    listSpaceByPage() {
+    listMemberSpaceByPage() {
       this.listLoading = true
       const { pageInfo, no } = this
       const postData = { pageInfo: pageInfo, no: no }
-      listSpaceByPage(postData).then((res) => {
+      listMemberSpaceByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
         this.list = data.list
@@ -168,8 +168,8 @@ export default {
     /**
      * 新增页面组件
      */
-    addSpace() {
-      this.$router.push({ name: 'SpaceEdit' })
+    addMemberSpace() {
+      this.$router.push({ name: 'MemberSpaceEdit' })
     },
     /**
      * 多选框change事件
@@ -183,7 +183,7 @@ export default {
      */
     handleSizeChange(value) {
       this.pageInfo.pageSize = value
-      this.listSpaceByPage()
+      this.listMemberSpaceByPage()
     },
     /**
      * 分页跳转
@@ -191,7 +191,7 @@ export default {
      */
     handleCurrentChange(value) {
       this.pageInfo.pageNum = value
-      this.listSpaceByPage()
+      this.listMemberSpaceByPage()
     },
     /**
      * 删除按钮
@@ -200,7 +200,7 @@ export default {
      */
     handleDelete(index, row) {
       this.ids = [row.id]
-      this.delSpace()
+      this.delMemberSpace()
     },
     /**
      * 编辑按钮
@@ -208,16 +208,16 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'SpaceEdit', query: { spaceId: row.id }})
+      this.$router.push({ name: 'MemberSpaceEdit', query: { spaceId: row.id }})
     },
     /**
      * 根据车位ID集合删除车位信息
      */
-    delSpace() {
+    delMemberSpace() {
       const ids = this.ids
-      delSpaceByIds(ids).then((res) => {
+      delMemberSpaceByIds(ids).then((res) => {
         this.$message.success(res.message)
-        this.listSpaceByPage()
+        this.listMemberSpaceByPage()
       })
     }
   }

@@ -145,17 +145,30 @@ export const constantRoutes = [
         meta: { title: 'MemberEdit', icon: 'tree' }
       },
       {
-        path: 'spaceList',
-        name: '车位管理',
-        component: () => import('@/views/space/list'),
-        meta: { title: '车位管理', icon: 'table' }
+        path: 'propertySpaceList',
+        name: '物业车位管理',
+        component: () => import('@/views/space/property/property-list'),
+        meta: { title: '物业车位管理', icon: 'table' }
       },
       {
-        path: 'spaceEdit',
-        name: 'SpaceEdit',
+        path: 'propertySpaceEdit',
+        name: 'PropertySpaceEdit',
         hidden: true,
-        component: () => import('@/views/space/edit'),
-        meta: { title: 'SpaceEdit', icon: 'tree' }
+        component: () => import('@/views/space/property/property-edit'),
+        meta: { title: 'PropertySpaceEdit', icon: 'tree' }
+      },
+      {
+        path: 'memberSpaceList',
+        name: '私家车位管理',
+        component: () => import('@/views/space/member/member-list'),
+        meta: { title: '物业车位管理', icon: 'table' }
+      },
+      {
+        path: 'memberSpaceEdit',
+        name: 'MemberSpaceEdit',
+        hidden: true,
+        component: () => import('@/views/space/member/member-edit'),
+        meta: { title: 'MemberSpaceEdit', icon: 'tree' }
       },
       {
         path: 'placardList',
