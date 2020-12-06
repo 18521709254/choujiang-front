@@ -3,7 +3,18 @@
     <div class="head">
       <el-button type="danger" @click="delBill">删除</el-button>
       <div class="search-box">
-        <el-input v-model="carNo" maxlength="50" placeholder="请输入车牌号进行查询" />
+        <el-date-picker
+          v-model="startDate"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="datetime"
+          placeholder="请选择订单开始时间"
+        />
+        <el-date-picker
+          v-model="endDate"
+          value-format="yyyy-MM-dd HH:mm:ss"
+          type="datetime"
+          placeholder="请选择订单结束时间"
+        />
         <el-button type="warning" @click="listBillByPage">查询</el-button>
       </div>
     </div>
@@ -27,13 +38,6 @@
         align="center"
         width="50"
       />
-      <el-table-column label="物业名称">
-        <template slot-scope="scope">
-          <div>
-            {{ scope.row.propertyName }}
-          </div>
-        </template>
-      </el-table-column>
       <el-table-column label="小区名称">
         <template slot-scope="scope">
           <div>
@@ -55,9 +59,9 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="缴费状态">
+      <el-table-column label="缴费状态" align="center">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
+          <el-tag style="text-align: center" :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="车位信息">
@@ -187,6 +191,10 @@ export default {
       total: 100,
       // 名称查询
       carNo: '',
+      // 开始时间
+      startDate: '',
+      // 结束时间
+      endDate: '',
       // 被选中的ID集合
       ids: []
     }
@@ -200,8 +208,8 @@ export default {
      */
     listBillByPage() {
       this.listLoading = true
-      const { pageInfo, carNo } = this
-      const postData = { pageInfo: pageInfo, carNo: carNo }
+      const { pageInfo, carNo, startDate } = this
+      const postData = { pageInfo: pageInfo, carNo: carNo, startDate: startDate }
       listBillByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
