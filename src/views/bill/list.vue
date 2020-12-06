@@ -38,39 +38,6 @@
         align="center"
         width="50"
       />
-      <el-table-column label="小区名称">
-        <template slot-scope="scope">
-          <div>
-            {{ scope.row.communityName }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="停车用户">
-        <template slot-scope="scope">
-          <div>
-            {{ scope.row.memberName }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="车牌号">
-        <template slot-scope="scope">
-          <div>
-            {{ scope.row.carNo }}
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="缴费状态" align="center">
-        <template slot-scope="scope">
-          <el-tag style="text-align: center" :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="车位信息">
-        <template slot-scope="scope">
-          <div>
-            {{ scope.row.spaceNo }}
-          </div>
-        </template>
-      </el-table-column>
       <el-table-column label="开始时间" align="center">
         <template slot-scope="scope">
           <div>
@@ -104,6 +71,53 @@
             <p style="margin: 0px;text-align: center;">
               {{ scope.row.payDate && scope.row.payDate.substring(0,10) }}
             </p>
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="小区名称">
+        <template slot-scope="scope">
+          <div>
+            {{ scope.row.communityName }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="停车用户">
+        <template slot-scope="scope">
+          <div>
+            {{ scope.row.memberName }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="车牌号">
+        <template slot-scope="scope">
+          <div>
+            {{ scope.row.carNo }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="缴费状态" align="center">
+        <template slot-scope="scope">
+          <el-tag style="text-align: center" :type="scope.row.status | statusFilter">{{ scope.row.status | statusType }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="车位信息">
+        <template slot-scope="scope">
+          <div>
+            {{ scope.row.spaceNo }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="订单金额">
+        <template slot-scope="scope">
+          <div>
+            ￥:{{ scope.row.totalMoney }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="抽取金额">
+        <template slot-scope="scope">
+          <div>
+            ￥:{{ scope.row.percentMoney }}
           </div>
         </template>
       </el-table-column>
