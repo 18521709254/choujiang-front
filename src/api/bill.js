@@ -57,6 +57,18 @@ export function delBillByIds(billIds) {
 }
 
 /**
+ * 获取订单的合计
+ * @param postData 订单数据
+ */
+export function getBillTotal(postData) {
+  return request({
+    url: '/bill/getBillTotal',
+    method: 'post',
+    data: postData
+  })
+}
+
+/**
  * 根据ID结束订单
  * @param billIds 订单ID集合
  */

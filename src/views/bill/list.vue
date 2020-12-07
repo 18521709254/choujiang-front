@@ -157,8 +157,8 @@
       </el-table-column>
     </el-table>
     <div class="total-price">
-      <span>订单合计：XXX</span>
-      <span>抽取金额合计：XXXX</span>
+      <span>订单合计：{{totalMoney}}</span>
+      <span>抽取金额合计：{{percentMoney}}</span>
     </div>
     <el-pagination
       style="display: flex;justify-content: flex-end;margin-top: 10px;"
@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import { listBillByPage, delBillByIds, closeBillByIds, payBillByIds } from '@/api/bill'
+import { listBillByPage, closeBillByIds, getBillTotal, payBillByIds } from '@/api/bill'
 export default {
   name: 'BillList',
   filters: {
@@ -213,15 +213,17 @@ export default {
       startDate: '',
       // 结束时间
       endDate: '',
-      // 被选中的ID集合
-      ids: []
+      // 抽取金额合计
+      percentMoney: 0,
+      // 总金额
+      totalMoney: 0
     }
   },
   created() {
     this.listBillByPage()
   },
   methods: {
-    delBill(){
+    delBill() {
 
     },
     /**
@@ -236,6 +238,13 @@ export default {
         this.listLoading = false
         this.list = data.list
         this.total = data.total
+      })
+      this.listLoading = true
+      getBillTotal(postData).then((res) => {
+        this.listLoading = false
+        const data = res.data
+        this.percentMoney = data.percentMoney
+        this.totalMoney = data.totalMoney
       })
     },
     /**
