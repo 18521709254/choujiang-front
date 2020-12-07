@@ -156,6 +156,10 @@
         </template>
       </el-table-column>
     </el-table>
+    <div class="total-price">
+      <span>订单合计：XXX</span>
+      <span>抽取金额合计：XXXX</span>
+    </div>
     <el-pagination
       style="display: flex;justify-content: flex-end;margin-top: 10px;"
       background
@@ -217,6 +221,9 @@ export default {
     this.listBillByPage()
   },
   methods: {
+    delBill(){
+
+    },
     /**
      * 数据查询
      */
@@ -326,9 +333,23 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 20px;
-}
-.search-box>button{
   margin-left: 10px;
+
+}
+.search-box .el-input{
+  margin-right: 10px;
+}
+.total-price{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #333333;
+}
+.total-price>span{
+  margin-left: 20px;
 }
 </style>

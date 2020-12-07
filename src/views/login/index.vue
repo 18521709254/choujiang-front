@@ -146,6 +146,7 @@
       </el-form-item>
       <el-form-item prop="grantTime">
         <el-date-picker
+          class="date-picker-box"
           v-model="propertyForm.grantTime"
           type="date"
           placeholder="选择日期"
@@ -346,6 +347,16 @@ $cursor: #fff;
     color: #ffffff;
     margin: 10px 0;
     cursor: pointer;
+  }
+  .date-picker-box{
+    display: flex;
+    align-items: center;
+  }
+  .date-picker-box>input{
+    padding-left: 26px;
+  }
+  .date-picker-box .el-icon-date{
+    margin-top: 1px;
   }
 }
 </style>
