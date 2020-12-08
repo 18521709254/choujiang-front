@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="head">
-      <el-button type="danger" @click="delBill">删除</el-button>
+      <!--      <el-button type="danger" @click="delBill">删除</el-button>-->
       <div class="search-box">
         <el-date-picker
           v-model="startDate"
@@ -107,44 +107,40 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="订单金额">
+      <el-table-column label="订单总金额">
         <template slot-scope="scope">
           <div>
             ￥:{{ scope.row.totalMoney }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="抽取金额">
+      <el-table-column label="平台抽取金额">
         <template slot-scope="scope">
           <div>
             ￥:{{ scope.row.percentMoney }}
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="150" align="center">
+      <el-table-column label="物业抽取金额">
         <template slot-scope="scope">
           <div>
-            <div style="display: flex;margin-bottom: 10px;">
-              <el-button
-                size="mini"
-                type="primary"
-                icon="el-icon-edit"
-                @click="handleEdit(scope.$index, scope.row)"
-              />
-              <el-button
-                size="mini"
-                type="danger"
-                icon="el-icon-delete"
-                @click="handleDelete(scope.$index, scope.row)"
-              />
-            </div>
+            ￥:{{ scope.row.propertyMoney }}
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="会员获取金额">
+        <template slot-scope="scope">
+          <div>
+            ￥:{{ scope.row.memberMoney }}
           </div>
         </template>
       </el-table-column>
     </el-table>
     <div class="total-price">
       <span>订单合计：{{ totalMoney }}</span>
-      <span>抽取金额合计：{{ percentMoney }}</span>
+      <span>平台金额合计：{{ percentMoney }}</span>
+      <span>物业金额合计：{{ propertyMoney }}</span>
+      <span>会员金额合计：{{ memberMoney }}</span>
     </div>
     <el-pagination
       style="display: flex;justify-content: flex-end;margin-top: 10px;"
@@ -163,7 +159,7 @@
 <script>
 import { listBillByPage, closeBillByIds, getBillTotal, payBillByIds } from '@/api/bill'
 export default {
-  name: 'BillList',
+  name: 'TariffList',
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -200,20 +196,21 @@ export default {
       // 结束时间
       endDate: '',
       // 是否只查询私人订单
-      privateFlag: false,
-      // 抽取金额合计
-      percentMoney: 0,
+      privateFlag: true,
       // 总金额
-      totalMoney: 0
+      totalMoney: 0,
+      // 平台抽取金额合计
+      percentMoney: 0,
+      // 物业抽取金额合计
+      propertyMoney: 0,
+      // 物业抽取金额合计
+      memberMoney: 0
     }
   },
   created() {
     this.listBillByPage()
   },
   methods: {
-    delBill() {
-
-    },
     /**
      * 数据查询
      */
@@ -231,8 +228,10 @@ export default {
       getBillTotal(postData).then((res) => {
         this.listLoading = false
         const data = res.data
-        this.percentMoney = data.percentMoney
         this.totalMoney = data.totalMoney
+        this.percentMoney = data.percentMoney
+        this.propertyMoney = data.propertyMoney
+        this.memberMoney = data.memberMoney
       })
     },
     /**

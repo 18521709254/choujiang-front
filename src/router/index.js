@@ -125,6 +125,12 @@ export const constantRoutes = [
         meta: { title: '订单管理', icon: 'table' }
       },
       {
+        path: 'tariffList',
+        name: '资费管理',
+        component: () => import('@/views/bill/tariff-list'),
+        meta: { title: '资费管理', icon: 'table' }
+      },
+      {
         path: 'billEdit',
         name: 'BillEdit',
         hidden: true,
