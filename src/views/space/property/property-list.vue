@@ -210,7 +210,7 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'SpaceEdit', query: { spaceId: row.id }})
+      this.$router.push({ name: 'PropertySpaceEdit', query: { spaceId: row.id }})
     },
     /**
      * 根据车位ID集合删除车位信息
