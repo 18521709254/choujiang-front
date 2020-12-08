@@ -61,7 +61,10 @@
         <el-input v-model="form.carNo" style="width: 500px" />
       </el-form-item>
       <el-form-item v-if="form.id" label="缴费状态:" prop="status">
-        <el-input v-model="form.status" style="width: 500px" />
+        <el-radio-group v-model="form.status">
+          <el-radio-button label="0">未交费</el-radio-button>
+          <el-radio-button label="1">已交费</el-radio-button>
+        </el-radio-group>
       </el-form-item>
       <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>

@@ -138,20 +138,6 @@
                 @click="handleDelete(scope.$index, scope.row)"
               />
             </div>
-            <div style="display: flex">
-              <el-button
-                size="mini"
-                type="success"
-                icon="el-icon-check"
-                @click="handleSuccess(scope.$index, scope.row)"
-              />
-              <el-button
-                size="mini"
-                type="success"
-                icon="el-icon-star-off"
-                @click="handlePay(scope.$index, scope.row)"
-              />
-            </div>
           </div>
         </template>
       </el-table-column>
