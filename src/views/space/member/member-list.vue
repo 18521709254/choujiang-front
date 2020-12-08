@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { listMemberSpaceByPage, delMemberSpaceByIds } from '@/api/memberSpace'
+import { listSpaceByPage, delSpaceByIds } from '@/api/space'
 export default {
   name: 'MemberSpaceList',
   filters: {
@@ -160,7 +160,7 @@ export default {
       this.listLoading = true
       const { pageInfo, no, type } = this
       const postData = { pageInfo: pageInfo, no: no, type: type }
-      listMemberSpaceByPage(postData).then((res) => {
+      listSpaceByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
         this.list = data.list
@@ -217,7 +217,7 @@ export default {
      */
     delMemberSpace() {
       const ids = this.ids
-      delMemberSpaceByIds(ids).then((res) => {
+      delSpaceByIds(ids).then((res) => {
         this.$message.success(res.message)
         this.listMemberSpaceByPage()
       })
