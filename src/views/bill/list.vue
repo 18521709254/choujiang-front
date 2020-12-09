@@ -114,13 +114,6 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="抽取金额">
-        <template slot-scope="scope">
-          <div>
-            ￥:{{ scope.row.percentMoney }}
-          </div>
-        </template>
-      </el-table-column>
       <el-table-column label="操作" width="150" align="center">
         <template slot-scope="scope">
           <div>

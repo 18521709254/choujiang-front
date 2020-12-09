@@ -4,9 +4,6 @@
       <el-form-item label="停车单价/每小时:" prop="price">
         <el-input v-model="form.price" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="费用占比:" prop="percent">
-        <el-input v-model="form.percent" style="width: 500px" />
-      </el-form-item>
       <el-form-item label="车位编号:" prop="no">
         <el-input v-model="form.no" style="width: 500px" />
       </el-form-item>

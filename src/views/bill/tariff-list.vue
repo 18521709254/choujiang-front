@@ -216,8 +216,8 @@ export default {
      */
     listBillByPage() {
       this.listLoading = true
-      const { pageInfo, carNo, startDate, privateFlag } = this
-      const postData = { pageInfo: pageInfo, carNo: carNo, startDate: startDate, privateFlag: privateFlag }
+      const { pageInfo, carNo, startDate, endDate, privateFlag } = this
+      const postData = { pageInfo: pageInfo, carNo: carNo, startDate: startDate, endDate: endDate, privateFlag: privateFlag }
       listBillByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false

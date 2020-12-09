@@ -25,8 +25,8 @@
       <el-form-item label="托管面积:" prop="area">
         <el-input v-model="form.area" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="审核状态:" v-if="form.id">
-        <el-radio-group  v-model="form.status">
+      <el-form-item v-if="form.id" label="审核状态:">
+        <el-radio-group v-model="form.status">
           <el-radio-button label="0">正在审核</el-radio-button>
           <el-radio-button label="1">审核通过</el-radio-button>
           <el-radio-button label="2">审核失败</el-radio-button>
@@ -55,6 +55,7 @@ export default {
         level: '',
         cardNo: '',
         contactName: '',
+        name: '',
         tel: '',
         area: '',
         status: 0
