@@ -91,7 +91,7 @@
           auto-complete="on"
         />
       </el-form-item>
-      <el-form-item prop="username">
+      <el-form-item prop="propertyName">
         <el-input
           ref="username"
           v-model="propertyForm.name"
@@ -146,8 +146,8 @@
       </el-form-item>
       <el-form-item prop="grantTime">
         <el-date-picker
-          class="date-picker-box"
           v-model="propertyForm.grantTime"
+          class="date-picker-box"
           type="date"
           placeholder="选择日期"
         />
@@ -217,7 +217,15 @@ export default {
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
         password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
-        propertyName: [{ required: true, trigger: 'blur', message: '请输入物业名称' }]
+        propertyName: [{ required: true, trigger: 'blur', message: '请输入物业名称' }],
+        name: [{ required: true, trigger: 'blur', message: '请输入用户名称' }],
+        tel: [{ required: true, trigger: 'blur', message: '请输入联系方式' }],
+        legalPerson: [{ required: true, trigger: 'blur', message: '请输入法人代表' }],
+        level: [{ required: true, trigger: 'blur', message: '请选择资质等级' }],
+        cardNo: [{ required: true, trigger: 'blur', message: '请输入资质证书号' }],
+        grantTime: [{ required: true, trigger: 'blur', message: '请选择准予时间' }],
+        contactName: [{ required: true, trigger: 'blur', message: '请输入联系人名称' }],
+        area: [{ required: true, trigger: 'blur', message: '请输入托管面积' }]
       },
       loading: false,
       passwordType: 'password',
@@ -261,7 +269,7 @@ export default {
     },
     handleRegister() {
       const { loginForm, propertyForm } = this
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.propertyForm.validate(valid => {
         if (valid) {
           // this.loading = true
           const postData = {
