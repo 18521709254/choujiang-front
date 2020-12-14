@@ -46,7 +46,8 @@
 </template>
 
 <script>
-import { saveComplaint, getComplaintById, uploadImage } from '@/api/complaint'
+import { saveComplaint, getComplaintById } from '@/api/complaint'
+import { uploadImage } from '@/api/base'
 import { listPropertyAll } from '@/api/property'
 import { listCommunityByPropertyId } from '@/api/community'
 import { listMemberAll } from '@/api/member'

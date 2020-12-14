@@ -102,76 +102,18 @@
           auto-complete="on"
         />
       </el-form-item>
-      <el-form-item prop="legalPerson">
-        <el-input
-          ref="username"
-          v-model="propertyForm.legalPerson"
-          placeholder="法人代表"
-          name="法人代表"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-      <el-form-item prop="level">
-        <el-select v-model="propertyForm.level" placeholder="请选择资质等级">
-          <el-option
-            v-for="item in levelList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="tel">
-        <el-input
-          v-model="propertyForm.tel"
-          placeholder="物业电话"
-          name="物业电话"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-      <el-form-item prop="cardNo">
-        <el-input
-          ref="username"
-          v-model="propertyForm.cardNo"
-          placeholder="资质证书号"
-          name="资质证书号"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-      <el-form-item prop="grantTime">
-        <el-date-picker
-          v-model="propertyForm.grantTime"
-          class="date-picker-box"
-          type="date"
-          placeholder="选择日期"
-        />
-      </el-form-item>
-      <el-form-item prop="contactName">
-        <el-input
-          v-model="propertyForm.contactName"
-          placeholder="联系人"
-          name="联系人"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-      <el-form-item prop="area">
-        <el-input
-          ref="username"
-          v-model="propertyForm.area"
-          placeholder="托管面积"
-          name="托管面积"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
+      <el-form-item label="资质文件图:" prop="path">
+        <el-upload
+          label="资质文件图:"
+          class="avatar-uploader"
+          action="#"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="propertyForm.path" :src="propertyForm.path" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon" />
+        </el-upload>
       </el-form-item>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册</el-button>
       <span class="registered" @click="registered = false">已有账号，点击登录</span>
@@ -181,6 +123,7 @@
 
 <script>
 import { register } from '@/api/user'
+import { uploadImage } from '@/api/base'
 
 export default {
   name: 'Login',
@@ -205,27 +148,14 @@ export default {
       // 物业信息
       propertyForm: {
         name: '',
-        legalPerson: '',
-        grantTime: '',
-        level: '',
-        cardNo: '',
-        contactName: '',
-        tel: '',
-        area: '',
+        path: '',
         status: 0
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
         password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
         propertyName: [{ required: true, trigger: 'blur', message: '请输入物业名称' }],
-        name: [{ required: true, trigger: 'blur', message: '请输入用户名称' }],
-        tel: [{ required: true, trigger: 'blur', message: '请输入联系方式' }],
-        legalPerson: [{ required: true, trigger: 'blur', message: '请输入法人代表' }],
-        level: [{ required: true, trigger: 'blur', message: '请选择资质等级' }],
-        cardNo: [{ required: true, trigger: 'blur', message: '请输入资质证书号' }],
-        grantTime: [{ required: true, trigger: 'blur', message: '请选择准予时间' }],
-        contactName: [{ required: true, trigger: 'blur', message: '请输入联系人名称' }],
-        area: [{ required: true, trigger: 'blur', message: '请输入托管面积' }]
+        path: [{ required: true, trigger: 'blur', message: '请上传物业资质图片' }]
       },
       loading: false,
       passwordType: 'password',
@@ -253,6 +183,27 @@ export default {
         this.$refs.password.focus()
       })
     },
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw)
+    },
+    /**
+     * 上传图片方法
+     */
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isLt2M) {
+        this.$message.error('上传头像图片大小不能超过 2MB!')
+        return false
+      }
+      // 上传图片
+      uploadImage(file).then((res) => {
+        this.propertyForm.path = res.data.filePath
+      })
+      return true
+    },
+    /**
+     * 注册方法
+     */
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {

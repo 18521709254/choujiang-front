@@ -75,7 +75,8 @@
 </template>
 
 <script>
-import { saveBill, getBillById, uploadImage } from '@/api/bill'
+import { saveBill, getBillById } from '@/api/bill'
+import { uploadImage } from '@/api/base'
 import { listMemberAll } from '@/api/member'
 import { listCommunityByPropertyId } from '@/api/community'
 import { listPropertyAll } from '@/api/property'

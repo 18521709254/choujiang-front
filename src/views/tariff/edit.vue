@@ -4,17 +4,26 @@
       <el-form-item label="物业名称:" prop="name">
         <el-input v-model="form.name" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="资质图片:" prop="path">
-        <el-upload
-          class="avatar-uploader"
-          action="#"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="form.path" :src="form.path" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon" />
-        </el-upload>
+      <el-form-item label="法人代表:" prop="legalPerson">
+        <el-input v-model="form.legalPerson" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="资质等级:" prop="level">
+        <el-input v-model="form.level" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="资质证书号:" prop="cardNo">
+        <el-input v-model="form.cardNo" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="准予时间:" prop="grantTime">
+        <el-input v-model="form.grantTime" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="联系人:" prop="contactName">
+        <el-input v-model="form.contactName" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="电话:" prop="tel">
+        <el-input v-model="form.tel" style="width: 500px" />
+      </el-form-item>
+      <el-form-item label="托管面积:" prop="area">
+        <el-input v-model="form.area" style="width: 500px" />
       </el-form-item>
       <el-form-item v-if="form.id" label="审核状态:">
         <el-radio-group v-model="form.status">
@@ -33,7 +42,6 @@
 
 <script>
 import { saveProperty, getPropertyById } from '@/api/property'
-import { uploadImage } from '@/api/base'
 export default {
   name: 'PropertyEdit',
   data() {
@@ -42,16 +50,20 @@ export default {
       form: {
         // 物业ID
         id: '',
-        path: '',
+        legalPerson: '',
+        grantTime: '',
+        level: '',
+        cardNo: '',
+        contactName: '',
+        name: '',
+        tel: '',
+        area: '',
         status: 0
       },
       // 表单验证规则
       formRules: {
         name: [
           { required: true, message: '请输物业名称', trigger: 'blur' }
-        ],
-        path: [
-          { required: true, message: '请上传资质图片', trigger: 'blur' }
         ]
       }
     }
@@ -66,24 +78,6 @@ export default {
     this.getPropertyById()
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imageUrl = URL.createObjectURL(file.raw)
-    },
-    /**
-     * 上传图片方法
-     */
-    beforeAvatarUpload(file) {
-      const isLt2M = file.size / 1024 / 1024 < 2
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-        return false
-      }
-      // 上传图片
-      uploadImage(file).then((res) => {
-        this.form.path = res.data.filePath
-      })
-      return true
-    },
     /**
      * 数据保存
      */

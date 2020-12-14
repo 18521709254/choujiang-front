@@ -61,7 +61,6 @@ export const constantRoutes = [
   {
     path: '/property',
     component: Layout,
-    redirect: '/property/list',
     name: 'Property',
     meta: { title: '物业管理', icon: 'el-icon-s-help' },
     children: [
@@ -70,8 +69,14 @@ export const constantRoutes = [
         name: '物业管理',
         component: () => import('@/views/property/list'),
         meta: {
-          roles: ['管理员'],
           title: '物业管理', icon: 'table' }
+      },
+      {
+        path: 'tariffList',
+        name: '资费管理',
+        component: () => import('@/views/tariff/list'),
+        meta: {
+          title: '资费管理', icon: 'table' }
       },
       {
         path: 'propertyEdit',

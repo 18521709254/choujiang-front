@@ -45,7 +45,8 @@
 </template>
 
 <script>
-import { saveCommunity, getCommunityById, uploadImage } from '@/api/community'
+import { saveCommunity, getCommunityById } from '@/api/community'
+import { uploadImage } from '@/api/base'
 import { listPropertyAll } from '@/api/property'
 export default {
   name: 'CommunityEdit',
