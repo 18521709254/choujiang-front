@@ -41,8 +41,18 @@ export default {
       // 表单数据
       form: {
         // 物业ID
+        // 物业ID
         id: '',
+        // 物业名称
+        name: '',
+        // 资质图片
         path: '',
+        // 平台占比
+        platformPercent: '',
+        // 物业占比
+        propertyPercent: '',
+        // 会员占比
+        memberPercent: '',
         status: 0
       },
       // 表单验证规则
@@ -125,5 +135,28 @@ export default {
 </script>
 
 <style scoped>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
 

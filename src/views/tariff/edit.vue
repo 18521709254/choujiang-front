@@ -4,33 +4,14 @@
       <el-form-item label="物业名称:" prop="name">
         <el-input v-model="form.name" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="法人代表:" prop="legalPerson">
-        <el-input v-model="form.legalPerson" style="width: 500px" />
+      <el-form-item label="平台占比:" prop="platformPercent">
+        <el-input v-model="form.platformPercent" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="资质等级:" prop="level">
-        <el-input v-model="form.level" style="width: 500px" />
+      <el-form-item label="物业占比:" prop="propertyPercent">
+        <el-input v-model="form.propertyPercent" style="width: 500px" />
       </el-form-item>
-      <el-form-item label="资质证书号:" prop="cardNo">
-        <el-input v-model="form.cardNo" style="width: 500px" />
-      </el-form-item>
-      <el-form-item label="准予时间:" prop="grantTime">
-        <el-input v-model="form.grantTime" style="width: 500px" />
-      </el-form-item>
-      <el-form-item label="联系人:" prop="contactName">
-        <el-input v-model="form.contactName" style="width: 500px" />
-      </el-form-item>
-      <el-form-item label="电话:" prop="tel">
-        <el-input v-model="form.tel" style="width: 500px" />
-      </el-form-item>
-      <el-form-item label="托管面积:" prop="area">
-        <el-input v-model="form.area" style="width: 500px" />
-      </el-form-item>
-      <el-form-item v-if="form.id" label="审核状态:">
-        <el-radio-group v-model="form.status">
-          <el-radio-button label="0">正在审核</el-radio-button>
-          <el-radio-button label="1">审核通过</el-radio-button>
-          <el-radio-button label="2">审核失败</el-radio-button>
-        </el-radio-group>
+      <el-form-item label="会员占比:" prop="memberPercent">
+        <el-input v-model="form.memberPercent" style="width: 500px" />
       </el-form-item>
       <el-form-item style="margin-left: 70%;">
         <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -43,21 +24,23 @@
 <script>
 import { saveProperty, getPropertyById } from '@/api/property'
 export default {
-  name: 'PropertyEdit',
+  name: 'TariffEdit',
   data() {
     return {
       // 表单数据
       form: {
         // 物业ID
         id: '',
-        legalPerson: '',
-        grantTime: '',
-        level: '',
-        cardNo: '',
-        contactName: '',
+        // 物业名称
         name: '',
-        tel: '',
-        area: '',
+        // 资质图片
+        path: '',
+        // 平台占比
+        platformPercent: '',
+        // 物业占比
+        propertyPercent: '',
+        // 会员占比
+        memberPercent: '',
         status: 0
       },
       // 表单验证规则

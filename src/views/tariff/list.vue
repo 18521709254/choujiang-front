@@ -43,6 +43,16 @@
           {{ scope.row.memberPercent }}
         </template>
       </el-table-column>
+      <el-table-column label="操作" width="150" align="center">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="primary"
+            icon="el-icon-edit"
+            @click="handleEdit(scope.$index, scope.row)"
+          ></el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       style="display: flex;justify-content: flex-end;margin-top: 10px;"
@@ -160,7 +170,7 @@ export default {
      * @param row 选中行数据
      */
     handleEdit(index, row) {
-      this.$router.push({ name: 'PropertyEdit', query: { propertyId: row.id }})
+      this.$router.push({ name: 'tariffEdit', query: { propertyId: row.id }})
     },
     /**
      * 根据物业ID集合删除物业信息

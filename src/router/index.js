@@ -79,6 +79,13 @@ export const constantRoutes = [
           title: '资费管理', icon: 'table' }
       },
       {
+        path: 'tariffEdit',
+        name: 'tariffEdit',
+        component: () => import('@/views/tariff/edit'),
+        meta: {
+          title: '资费详情', icon: 'table' }
+      },
+      {
         path: 'propertyEdit',
         name: 'PropertyEdit',
         hidden: true,
