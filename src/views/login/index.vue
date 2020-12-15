@@ -94,7 +94,7 @@
       <el-form-item prop="propertyName">
         <el-input
           ref="username"
-          v-model="propertyForm.name"
+          v-model="loginForm.propertyName"
           placeholder="物业名称"
           name="物业名称"
           type="text"
@@ -111,7 +111,7 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="propertyForm.path" :src="propertyForm.path" class="avatar">
+          <img v-if="loginForm.path" :src="loginForm.path" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon" />
         </el-upload>
       </el-form-item>
@@ -143,13 +143,9 @@ export default {
       loginForm: {
         account: '',
         tel: '',
-        password: ''
-      },
-      // 物业信息
-      propertyForm: {
-        name: '',
-        path: '',
-        status: 0
+        password: '',
+        propertyName: '',
+        path: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
@@ -197,7 +193,7 @@ export default {
       }
       // 上传图片
       uploadImage(file).then((res) => {
-        this.propertyForm.path = res.data.filePath
+        this.loginForm.path = res.data.filePath
       })
       return true
     },
@@ -219,7 +215,12 @@ export default {
       })
     },
     handleRegister() {
-      const { loginForm, propertyForm } = this
+      const { loginForm } = this
+      const propertyForm = {
+        name: loginForm.propertyName,
+        path: loginForm.path,
+        status: 0
+      }
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           // this.loading = true
