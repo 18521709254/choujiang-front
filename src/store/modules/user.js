@@ -35,9 +35,9 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { account, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ account: username.trim(), password: password }).then((response) => {
+      login({ account: account.trim(), password: password }).then((response) => {
         if (response.message !== '登陆成功') {
           Message.warning(response.message)
           return

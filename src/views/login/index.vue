@@ -4,12 +4,12 @@
       <h3 class="title">小区车位共享租赁系统</h3>
     </div>
     <el-form v-if="!registered" ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          v-model="loginForm.username"
+          v-model="loginForm.account"
           placeholder="Username"
           name="username"
           type="text"
@@ -39,7 +39,7 @@
       <span class="registered" @click="registered = true">暂无账号，请点击此处注册！</span>
     </el-form>
     <el-form v-if="registered" ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -142,13 +142,14 @@ export default {
       // 登陆信息
       loginForm: {
         account: '',
+        username: '',
         tel: '',
         password: '',
         propertyName: '',
         path: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', message: '请输入账号' }],
+        account: [{ required: true, trigger: 'blur', message: '请输入账号' }],
         password: [{ required: true, trigger: 'blur', message: '请输入密码' }],
         propertyName: [{ required: true, trigger: 'blur', message: '请输入物业名称' }],
         path: [{ required: true, trigger: 'blur', message: '请上传物业资质图片' }]
