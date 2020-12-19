@@ -35,11 +35,6 @@
           {{ scope.row.no }}
         </template>
       </el-table-column>
-      <el-table-column label="费用占比">
-        <template slot-scope="scope">
-          {{ scope.row.percent }}
-        </template>
-      </el-table-column>
       <el-table-column label="单价/每小时">
         <template slot-scope="scope">
           {{ scope.row.price }}

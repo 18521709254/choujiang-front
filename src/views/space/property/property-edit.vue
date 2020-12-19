@@ -8,7 +8,7 @@
         <el-input v-model="form.no" style="width: 500px" />
       </el-form-item>
       <el-form-item label="所属小区:" prop="communityId">
-        <el-select v-model="form.communityId" filterable clearable placeholder="请选择物业">
+        <el-select v-model="form.communityId" filterable clearable placeholder="请选择小区">
           <el-option
             v-for="item in communityList"
             :key="item.id"

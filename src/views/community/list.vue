@@ -4,7 +4,7 @@
       <el-button type="primary" @click="addCommunity">新增</el-button>
       <el-button type="danger" @click="delCommunity">删除</el-button>
       <div class="search-box">
-        <el-input maxlength="50" v-model="name" placeholder="请输入名称进行查询" />
+        <el-input maxlength="50" v-model="searchKey" placeholder="请输入名称进行查询" />
         <el-button type="warning" @click="listCommunityByPage">查询</el-button>
       </div>
     </div>
@@ -105,9 +105,9 @@ export default {
         pageSize: 5
       },
       // 总数量
-      total: 100,
+      total:100,
       // 名称查询
-      name: '',
+      searchKey: '',
       // 被选中的ID集合
       ids: []
     }
@@ -121,8 +121,8 @@ export default {
      */
     listCommunityByPage() {
       this.listLoading = true
-      const { pageInfo, name } = this
-      const postData = { pageInfo: pageInfo, name: name }
+      const { pageInfo, searchKey } = this
+      const postData = { pageInfo: pageInfo, searchKey: searchKey }
       listCommunityByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false

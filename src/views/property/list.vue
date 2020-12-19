@@ -115,9 +115,9 @@ export default {
      * 数据查询
      */
     listPropertyByPage() {
-      this.listLoading = true
-      const { pageInfo, name } = this
-      const postData = { pageInfo: pageInfo, name: name }
+      this.listLoading = true//查询效果
+      const { pageInfo, name } = this//从this里面取东西
+      const postData = { pageInfo: pageInfo, name: name }//定义一个postData对象
       listPropertyByPage(postData).then((res) => {
         const data = res.data
         this.listLoading = false
