@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '小区车位共享租赁系统',
+  title: '白银乡成就Fate抽奖系统',
 
   /**
    * @type {boolean} true | false
